@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
@@ -7,6 +8,7 @@ import Grain from "@/components/ui/Grain";
 import Cursor from "@/components/ui/Cursor";
 import SceneCanvas from "@/components/three/SceneCanvas";
 import SceneDebug from "@/components/three/SceneDebug";
+import Preloader from "@/components/sections/Preloader";
 import { site } from "@/content/site";
 
 const geistSans = Geist({
@@ -71,9 +73,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
     >
       <body>
+        <Script id="dw-intro-boot" strategy="beforeInteractive">
+          {`try{var d=document.documentElement;var r=window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(sessionStorage.getItem('dw:preloaded')==='1'||r){d.dataset.preloaded='true'}else{d.dataset.intro='pending'}}catch(e){}`}
+        </Script>
+        <Preloader />
         <SceneCanvas />
         <a
           href="#main"

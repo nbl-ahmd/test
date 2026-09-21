@@ -119,6 +119,16 @@
   }
 }
 
+/* Preloader: the inline boot script hides it for returning / reduced-motion
+   visitors before first paint, and hides hero copy until the intro reveals it. */
+html[data-preloaded="true"] .preloader {
+  display: none;
+}
+
+html[data-intro="pending"] [data-intro-hide] {
+  opacity: 0;
+}
+
 /* Custom cursor: hide the native one only when it is actually replaced */
 @media (pointer: fine) {
   html[data-custom-cursor="true"],

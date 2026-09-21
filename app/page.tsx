@@ -1,25 +1,12 @@
 import { site } from "@/content/site";
+import Hero from "@/components/sections/Hero";
+import Manifesto from "@/components/sections/Manifesto";
 
 export default function Home() {
   return (
-    <div id="top">
-      <section
-        aria-labelledby="hero-title"
-        className="relative z-10 flex min-h-svh flex-col justify-end px-5 pb-12 md:px-8 md:pb-16"
-      >
-        <p className="label text-muted">
-          ({site.name.toLowerCase()} — web studio)
-        </p>
-        <h1
-          id="hero-title"
-          className="display mt-6 max-w-[16ch] text-balance"
-        >
-          We weave <em className="accent-italic">ideas</em> into the web.
-        </h1>
-        <p className="mt-8 max-w-xl text-lg text-pretty text-muted md:text-xl">
-          {site.description}
-        </p>
-      </section>
+    <>
+      <Hero />
+      <Manifesto />
 
       {site.nav.map((item) => (
         <section
@@ -40,6 +27,6 @@ export default function Home() {
           </p>
         </section>
       ))}
-    </div>
+    </>
   );
 }

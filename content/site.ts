@@ -10,6 +10,20 @@ export type SocialLink = {
   href: string;
 };
 
+export type HeroCopy = {
+  label: string;
+  titleBefore: string;
+  titleEmphasis: string;
+  titleAfter: string;
+  sub: string;
+  scrollLabel: string;
+};
+
+export type ManifestoCopy = {
+  label: string;
+  body: string;
+};
+
 export type SiteConfig = {
   name: string;
   legalName: string;
@@ -27,6 +41,8 @@ export type SiteConfig = {
     label: string;
     href: string;
   };
+  hero: HeroCopy;
+  manifesto: ManifestoCopy;
 };
 
 export const site: SiteConfig = {
@@ -60,5 +76,17 @@ export const site: SiteConfig = {
   cta: {
     label: "Start a project",
     href: "#contact",
+  },
+  hero: {
+    label: "(domweave labs — web studio)",
+    titleBefore: "We weave",
+    titleEmphasis: "ideas",
+    titleAfter: "into the web.",
+    sub: "Websites, landing pages, web apps and custom software — designed and built under one roof, engineered for speed, crafted to convert.",
+    scrollLabel: "( scroll )",
+  },
+  manifesto: {
+    label: "( manifesto )",
+    body: "Every great product is a thousand small threads pulled tight — design, code, copy, performance, trust. We weave them together so nothing comes loose after launch.",
   },
 };
