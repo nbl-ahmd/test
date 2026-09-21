@@ -10,7 +10,7 @@ export default function Faq() {
       aria-labelledby="faq-title"
       className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
     >
-      <div className="text-scrim mx-auto w-full max-w-4xl">
+      <div className="mx-auto w-full max-w-4xl">
         <p className="label text-muted">{faq.label}</p>
         <h2
           id="faq-title"

@@ -10,7 +10,7 @@ export default function Contact() {
       aria-labelledby="contact-title"
       className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
     >
-      <div className="text-scrim mx-auto grid w-full max-w-6xl gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div className="mx-auto grid w-full max-w-6xl gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div>
           <p className="label text-muted">{contact.label}</p>
           <h2

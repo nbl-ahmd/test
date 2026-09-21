@@ -59,7 +59,7 @@ export default function Work() {
       aria-labelledby="work-title"
       className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
     >
-      <div className="text-scrim mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-6xl">
         <p className="label text-muted">{site.work.label}</p>
         <h2
           id="work-title"

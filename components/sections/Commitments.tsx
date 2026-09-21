@@ -11,7 +11,7 @@ export default function Commitments() {
       aria-labelledby="commitments-title"
       className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
     >
-      <div className="text-scrim mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-6xl">
         <h2 id="commitments-title" className="label text-muted">
           {commitments.label}
         </h2>

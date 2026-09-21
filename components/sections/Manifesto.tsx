@@ -82,7 +82,7 @@ export default function Manifesto() {
         aria-label="Manifesto"
         className="relative z-10 flex min-h-svh items-center border-t border-line px-5 py-24 md:px-8"
       >
-        <div className="text-scrim mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full max-w-5xl">
           <p className="label text-muted">{site.manifesto.label}</p>
           <p className="sr-only">{site.manifesto.body}</p>
           <p
@@ -100,7 +100,7 @@ export default function Manifesto() {
         aria-label="Principles"
         className="relative z-10 border-t border-line px-5 py-20 md:px-8 md:py-28"
       >
-        <Reveal className="text-scrim mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-3">
+        <Reveal className="mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-3">
           {site.manifesto.principles.map((principle) => (
             <article key={principle.title} data-reveal>
               <p className="label text-muted">{principle.index}</p>

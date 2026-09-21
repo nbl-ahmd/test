@@ -86,26 +86,6 @@
     letter-spacing: -0.01em;
   }
 
-  /* Readability scrim for text placed over the particle scene. */
-  .text-scrim {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .text-scrim::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(
-      120% 120% at 50% 50%,
-      rgba(10, 10, 11, 0.8) 0%,
-      rgba(10, 10, 11, 0.6) 60%,
-      rgba(10, 10, 11, 0) 100%
-    );
-  }
-
   /* Static backdrop behind the 3D scene (and the only backdrop without WebGL) */
   .scene-fallback {
     background:

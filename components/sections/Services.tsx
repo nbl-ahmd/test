@@ -66,7 +66,7 @@ export default function Services() {
       aria-labelledby="services-title"
       className="relative z-10 border-t border-line"
     >
-      <div className="text-scrim px-5 pt-24 md:px-8 md:pt-32">
+      <div className="px-5 pt-24 md:px-8 md:pt-32">
         <div className="mx-auto w-full max-w-6xl">
           <p className="label text-muted">{site.services.label}</p>
           <h2
@@ -98,7 +98,7 @@ export default function Services() {
               className="flex border-t border-line px-5 py-16 first:border-t-0 md:h-svh md:items-center md:border-t-0 md:px-8 md:py-0"
             >
               <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-                <div className="text-scrim">
+                <div>
                   <p className="label text-muted">({step.index})</p>
                   <h3 className="mt-4 text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-medium tracking-[-0.03em]">
                     {step.title}
@@ -118,7 +118,7 @@ export default function Services() {
                   </dl>
                 </div>
 
-                <div className="text-scrim">
+                <div>
                   <p className="text-pretty text-muted">{step.detail}</p>
                   <ul className="mt-8 grid gap-x-6 gap-y-3 sm:grid-cols-2">
                     {step.deliverables.map((item) => (

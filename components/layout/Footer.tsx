@@ -39,7 +39,7 @@ export default function Footer() {
 
   return (
     <footer className="relative z-10 border-t border-line px-5 pt-20 pb-10 md:px-8">
-      <div className="text-scrim mx-auto w-full max-w-6xl">
+      <div className="mx-auto w-full max-w-6xl">
         <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_auto_auto_auto]">
           <p className="max-w-xs text-pretty text-fg/85">
             {site.footer.tagline}
