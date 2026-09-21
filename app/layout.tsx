@@ -4,6 +4,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import Grain from "@/components/ui/Grain";
 import Cursor from "@/components/ui/Cursor";
 import SceneCanvas from "@/components/three/SceneCanvas";
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll>
           <Header />
           <main id="main">{children}</main>
+          <Footer />
           <SceneSections />
         </SmoothScroll>
         <Grain />

@@ -95,13 +95,13 @@
   .text-scrim::before {
     content: "";
     position: absolute;
-    inset: -2rem;
+    inset: 0;
     z-index: -1;
     pointer-events: none;
     background: radial-gradient(
-      115% 115% at 50% 50%,
-      rgba(10, 10, 11, 0.78) 0%,
-      rgba(10, 10, 11, 0.58) 58%,
+      120% 120% at 50% 50%,
+      rgba(10, 10, 11, 0.8) 0%,
+      rgba(10, 10, 11, 0.6) 60%,
       rgba(10, 10, 11, 0) 100%
     );
   }
@@ -143,6 +143,17 @@
 
   .skip-link:focus-visible {
     transform: translateY(0);
+  }
+
+  /* Work hover preview: only for fine pointers without reduced motion. */
+  .preview-only-fine {
+    display: none;
+  }
+}
+
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .preview-only-fine {
+    display: block;
   }
 }
 

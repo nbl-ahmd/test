@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type MouseEvent } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { onRevealed } from "@/lib/intro";
 import { prefersReducedMotion } from "@/lib/motion";
+import { scrollToId } from "@/lib/scroll";
 import LocalTime from "@/components/ui/LocalTime";
+import Magnetic from "@/components/ui/Magnetic";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -77,6 +79,11 @@ export default function Hero() {
     [],
   );
 
+  const handleNav = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    event.preventDefault();
+    scrollToId(id);
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -105,6 +112,41 @@ export default function Hero() {
           className="mt-8 max-w-xl text-[1.125rem] leading-[1.6] text-pretty text-fg/85 md:text-[1.375rem]"
         >
           {site.hero.sub}
+        </p>
+
+        <div
+          data-intro-hide
+          data-hero-fade
+          className="mt-10 flex flex-wrap items-center gap-3"
+        >
+          <Magnetic>
+            <a
+              href={site.hero.primaryCta.href}
+              data-cursor="open"
+              onClick={(event) => handleNav(event, "contact")}
+              className="label inline-flex items-center rounded-full bg-accent px-5 py-3 text-bg transition-colors hover:bg-fg"
+            >
+              {site.hero.primaryCta.label}
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href={site.hero.secondaryCta.href}
+              data-cursor="view"
+              onClick={(event) => handleNav(event, "work")}
+              className="label inline-flex items-center rounded-full border border-line px-5 py-3 transition-colors hover:border-fg"
+            >
+              {site.hero.secondaryCta.label}
+            </a>
+          </Magnetic>
+        </div>
+
+        <p
+          data-intro-hide
+          data-hero-fade
+          className="label mt-6 text-muted"
+        >
+          {site.hero.trustStrip.join(" · ")}
         </p>
       </div>
 

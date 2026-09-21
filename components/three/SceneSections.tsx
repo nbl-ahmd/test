@@ -6,7 +6,6 @@ import {
   CONTACT_CAM,
   PROCESS_CAM,
   SECTION_ORDER,
-  SERVICE_STEP_ROTATION,
   applySectionKeyframe,
   findActiveSectionId,
 } from "@/lib/scene-keyframes";
@@ -43,24 +42,7 @@ export default function SceneSections() {
       );
     }
 
-    const steps = gsap.utils.toArray<HTMLElement>("[data-service-step]");
-    steps.forEach((step, index) => {
-      const rotY =
-        SERVICE_STEP_ROTATION[index] ??
-        SERVICE_STEP_ROTATION[SERVICE_STEP_ROTATION.length - 1];
-
-      triggers.push(
-        ScrollTrigger.create({
-          trigger: step,
-          start: "top 60%",
-          end: "bottom 40%",
-          onToggle: (self) => {
-            if (self.isActive) setSceneTarget({ rotY });
-          },
-        }),
-      );
-    });
-
+    // Service-step rotation is driven by the pinned Services section itself.
     const processElement = document.getElementById("process");
     if (processElement) {
       triggers.push(

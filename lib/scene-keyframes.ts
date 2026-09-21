@@ -7,10 +7,13 @@ export type SectionKeyframe = SceneTarget;
  * Scroll keyframes per section id. Sections that do not exist yet are simply
  * skipped by the runner, so this stays in sync with the final page order.
  */
+// Ordered as they appear on the page.
 export const SECTION_KEYFRAMES: Record<string, SectionKeyframe> = {
   hero: { shape: 0, dim: 1, x: 0, camZ: 6.5, rotY: 0, turbulence: 0.35 },
   manifesto: { shape: 1, dim: 0.55, x: 1.6, camZ: 7.2, rotY: 0, turbulence: 0.16 },
+  principles: { shape: 1, dim: 0.5, x: 1.4, camZ: 7.3, rotY: 0.15, turbulence: 0.15 },
   services: { shape: 2, dim: 0.5, x: 2.2, camZ: 7, rotY: 0, turbulence: 0.1 },
+  clients: { shape: 2, dim: 0.35, x: 1.2, camZ: 7.2, rotY: 0.45, turbulence: 0.1 },
   process: { shape: 3, dim: 0.45, x: 0, camZ: 6.5, rotY: 0, turbulence: 0.12 },
   work: { shape: 1, dim: 0.2, x: 0, camZ: 7.4, rotY: 0.4, turbulence: 0.14 },
   why: { shape: 1, dim: 0.2, x: 0, camZ: 7.4, rotY: 0.7, turbulence: 0.14 },
