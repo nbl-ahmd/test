@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "audit:a11y": "node scripts/axe.mjs",
-    "audit:lighthouse": "mkdir -p .audit && lighthouse http://localhost:3000/ --only-categories=accessibility,performance,seo --chrome-flags=\"--headless=new --no-sandbox\" --output=json --output-path=./.audit/lighthouse.json --quiet"
+    "audit:lighthouse": "mkdir -p .audit && lighthouse http://localhost:3000/ --preset=desktop --only-categories=accessibility,performance,seo --chrome-flags=\"--headless=new --no-sandbox\" --output=json --output-path=./.audit/lighthouse.json --quiet"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

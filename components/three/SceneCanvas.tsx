@@ -1,12 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { hasWebGL } from "@/lib/scene-quality";
 import { prefersReducedMotion } from "@/lib/motion";
-import { silenceKnownThreeWarnings } from "@/lib/three-console";
-
-silenceKnownThreeWarnings();
 
 const WeaveScene = dynamic(() => import("./WeaveScene"), { ssr: false });
 
@@ -18,10 +15,38 @@ export default function SceneCanvas() {
     () => true,
     () => false,
   );
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let idleId = 0;
+    let timeoutId = 0;
+
+    const enable = () => setReady(true);
+
+    const schedule = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(enable, { timeout: 1500 });
+      } else {
+        timeoutId = window.setTimeout(enable, 400);
+      }
+    };
+
+    if (document.readyState === "complete") {
+      schedule();
+    } else {
+      window.addEventListener("load", schedule, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", schedule);
+      if (idleId) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, []);
 
   const enabled = useMemo(
-    () => mounted && !prefersReducedMotion() && hasWebGL(),
-    [mounted],
+    () => mounted && ready && !prefersReducedMotion() && hasWebGL(),
+    [mounted, ready],
   );
 
   return (

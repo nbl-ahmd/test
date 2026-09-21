@@ -5,6 +5,9 @@ import { Canvas } from "@react-three/fiber";
 import WeavePoints from "./WeavePoints";
 import { getSceneQuality } from "@/lib/scene-quality";
 import { scene, setPointerTarget } from "@/lib/scene-store";
+import { silenceKnownThreeWarnings } from "@/lib/three-console";
+
+silenceKnownThreeWarnings();
 
 type Frameloop = "always" | "never";
 
