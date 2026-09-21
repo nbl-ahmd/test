@@ -1,0 +1,90 @@
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import "./globals.css";
+import SmoothScroll from "@/components/providers/SmoothScroll";
+import Header from "@/components/layout/Header";
+import Grain from "@/components/ui/Grain";
+import Cursor from "@/components/ui/Cursor";
+import { site } from "@/content/site";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  weight: "400",
+  style: "italic",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — ${site.tagline}`,
+    template: `%s — ${site.name}`,
+  },
+  description: site.description,
+  applicationName: site.name,
+  keywords: [
+    "web studio",
+    "website design",
+    "landing pages",
+    "web apps",
+    "custom software",
+    "Next.js development",
+  ],
+  authors: [{ name: site.name }],
+  creator: site.name,
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: site.url,
+    siteName: site.name,
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0b",
+  colorScheme: "dark",
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+    >
+      <body>
+        <a
+          href="#main"
+          className="skip-link label rounded-full bg-fg px-4 py-2.5 text-bg"
+        >
+          Skip to content
+        </a>
+        <SmoothScroll>
+          <Header />
+          <main id="main">{children}</main>
+        </SmoothScroll>
+        <Grain />
+        <Cursor />
+      </body>
+    </html>
+  );
+}
