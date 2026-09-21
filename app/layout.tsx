@@ -5,6 +5,8 @@ import SmoothScroll from "@/components/providers/SmoothScroll";
 import Header from "@/components/layout/Header";
 import Grain from "@/components/ui/Grain";
 import Cursor from "@/components/ui/Cursor";
+import SceneCanvas from "@/components/three/SceneCanvas";
+import SceneDebug from "@/components/three/SceneDebug";
 import { site } from "@/content/site";
 
 const geistSans = Geist({
@@ -72,6 +74,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
     >
       <body>
+        <SceneCanvas />
         <a
           href="#main"
           className="skip-link label rounded-full bg-fg px-4 py-2.5 text-bg"
@@ -84,6 +87,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </SmoothScroll>
         <Grain />
         <Cursor />
+        {process.env.NODE_ENV !== "production" ? <SceneDebug /> : null}
       </body>
     </html>
   );
