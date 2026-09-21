@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import Accordion from "@/components/ui/Accordion";
+import Container from "@/components/layout/Container";
 
 export default function Faq() {
   const { faq } = site;
@@ -8,9 +9,9 @@ export default function Faq() {
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-4xl">
+      <Container>
         <p className="label text-muted">{faq.label}</p>
         <h2
           id="faq-title"
@@ -22,7 +23,7 @@ export default function Faq() {
         <div className="mt-12">
           <Accordion items={faq.items} />
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

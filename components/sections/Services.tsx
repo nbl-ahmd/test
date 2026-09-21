@@ -8,6 +8,7 @@ import { prefersReducedMotion } from "@/lib/motion";
 import { setSceneTarget } from "@/lib/scene-store";
 import { SERVICE_STEP_ROTATION } from "@/lib/scene-keyframes";
 import Tick from "@/components/ui/Tick";
+import Container from "@/components/layout/Container";
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -66,8 +67,8 @@ export default function Services() {
       aria-labelledby="services-title"
       className="relative z-10 border-t border-line"
     >
-      <div className="px-5 pt-24 md:px-8 md:pt-32">
-        <div className="mx-auto w-full max-w-6xl">
+      <div className="pt-24 md:pt-32">
+        <Container>
           <p className="label text-muted">{site.services.label}</p>
           <h2
             id="services-title"
@@ -79,7 +80,7 @@ export default function Services() {
           <p className="label mt-4 text-muted md:hidden">
             {site.services.note}
           </p>
-        </div>
+        </Container>
       </div>
 
       <div
@@ -95,9 +96,9 @@ export default function Services() {
             <article
               key={step.index}
               data-service-step
-              className="flex border-t border-line px-5 py-16 first:border-t-0 md:h-svh md:items-center md:border-t-0 md:px-8 md:py-0"
+              className="flex border-t border-line py-16 first:border-t-0 md:h-svh md:items-center md:border-t-0 md:py-0"
             >
-              <div className="mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+              <Container className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                 <div>
                   <p className="label text-muted">({step.index})</p>
                   <h3 className="mt-4 text-[clamp(2.2rem,5vw,4rem)] leading-[1.02] font-medium tracking-[-0.03em]">
@@ -129,15 +130,17 @@ export default function Services() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </Container>
             </article>
           ))}
         </div>
       </div>
 
-      <p className="hidden px-5 pb-16 md:block md:px-8">
-        <span className="label text-muted">{site.services.note}</span>
-      </p>
+      <div className="hidden pb-16 md:block">
+        <Container>
+          <p className="label text-muted">{site.services.note}</p>
+        </Container>
+      </div>
     </section>
   );
 }

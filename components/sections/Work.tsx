@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { isFinePointer, prefersReducedMotion } from "@/lib/motion";
 import { scrollToId } from "@/lib/scroll";
+import Container from "@/components/layout/Container";
 
 export default function Work() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -57,9 +58,9 @@ export default function Work() {
       ref={sectionRef}
       id="work"
       aria-labelledby="work-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <Container>
         <p className="label text-muted">{site.work.label}</p>
         <h2
           id="work-title"
@@ -120,7 +121,7 @@ export default function Work() {
             {site.work.closing} →
           </a>
         </div>
-      </div>
+      </Container>
 
       <div
         ref={previewRef}

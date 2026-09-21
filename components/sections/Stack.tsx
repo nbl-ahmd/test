@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import Reveal from "@/components/ui/Reveal";
 import Marquee from "@/components/ui/Marquee";
+import Container from "@/components/layout/Container";
 
 export default function Stack() {
   const { stack } = site;
@@ -11,17 +12,17 @@ export default function Stack() {
       aria-labelledby="stack-title"
       className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-6xl px-5 md:px-8">
+      <Container>
         <h2 id="stack-title" className="label text-muted">
           {stack.label}
         </h2>
-      </div>
+      </Container>
 
       <div className="mt-10">
         <Marquee items={stack.marquee} />
       </div>
 
-      <div className="mx-auto w-full max-w-6xl px-5 md:px-8">
+      <Container>
         <Reveal className="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
           {stack.groups.map((group) => (
             <div key={group.title} data-reveal>
@@ -41,7 +42,7 @@ export default function Stack() {
         </Reveal>
 
         <p className="mt-14 text-muted">{stack.footnote}</p>
-      </div>
+      </Container>
     </section>
   );
 }

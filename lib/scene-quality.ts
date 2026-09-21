@@ -4,8 +4,8 @@ export type SceneQuality = {
   lowEnd: boolean;
 };
 
-const DESKTOP_COUNT = 22000;
-const MOBILE_COUNT = 8000;
+const DESKTOP_COUNT = 14000;
+const MOBILE_COUNT = 6000;
 
 export function getSceneQuality(): SceneQuality {
   if (typeof window === "undefined") {

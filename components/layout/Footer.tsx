@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import LocalTime from "@/components/ui/LocalTime";
 import BackToTop from "@/components/ui/BackToTop";
+import Container from "@/components/layout/Container";
 
 type FooterLink = { label: string; href: string };
 
@@ -38,8 +39,8 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative z-10 border-t border-line px-5 pt-20 pb-10 md:px-8">
-      <div className="mx-auto w-full max-w-6xl">
+    <footer className="relative z-10 border-t border-line pt-20 pb-10">
+      <Container>
         <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_auto_auto_auto]">
           <p className="max-w-xs text-pretty text-fg/85">
             {site.footer.tagline}
@@ -91,7 +92,7 @@ export default function Footer() {
           <LocalTime />
           <BackToTop />
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

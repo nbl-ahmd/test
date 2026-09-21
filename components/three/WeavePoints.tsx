@@ -6,9 +6,18 @@ import * as THREE from "three";
 import { createShapeAttributes } from "./shapes";
 import { weaveFragmentShader, weaveVertexShader } from "./shaders";
 import { scene } from "@/lib/scene-store";
+import {
+  MOBILE_BREAKPOINT,
+  MOBILE_SCENE_SCALE,
+  RIGHT_STAGE_CENTER,
+  RIGHT_STAGE_WIDTH,
+} from "@/lib/scene-keyframes";
 
 const COLOR_FG = new THREE.Color("#ecebe6");
 const COLOR_ACCENT = new THREE.Color("#c8ff2e");
+
+/** Approximate world-space bounding width of each morph shape. */
+const SHAPE_WIDTHS = [6.6, 5.6, 3.7, 4.0, 3.0];
 
 export default function WeavePoints({ count }: { count: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -28,6 +37,7 @@ export default function WeavePoints({ count }: { count: number }) {
     g.setAttribute("aPos4", new THREE.BufferAttribute(p4, 3));
     g.setAttribute("aRand", new THREE.BufferAttribute(attrs.rand, 1));
     g.setAttribute("aScale", new THREE.BufferAttribute(attrs.scale, 1));
+    g.setAttribute("aEdge", new THREE.BufferAttribute(attrs.edge, 1));
 
     return g;
   }, [attrs]);
@@ -38,7 +48,8 @@ export default function WeavePoints({ count }: { count: number }) {
       uShape: { value: scene.current.shape },
       uDim: { value: scene.current.dim },
       uTurbulence: { value: scene.current.turbulence },
-      uSize: { value: 20 },
+      uSize: { value: 10 },
+      uMaxSize: { value: 2.2 },
       uPixelRatio: { value: 1 },
       uAccent: { value: 0.08 },
       uVelocity: { value: 0 },
@@ -72,14 +83,45 @@ export default function WeavePoints({ count }: { count: number }) {
     pointer.x = THREE.MathUtils.damp(pointer.x, pointer.targetX, 3, d);
     pointer.y = THREE.MathUtils.damp(pointer.y, pointer.targetY, 3, d);
 
-    group.position.x = THREE.MathUtils.damp(group.position.x, current.x, 3, d);
+    // Stage composition. `right` is desktop-only: centre the group at 72vw and
+    // scale it to ~30vw so it can never cross into the text columns. Phones
+    // centre a smaller, dimmer scene behind the copy.
+    const compact = window.innerWidth < MOBILE_BREAKPOINT;
+    const stage = target.stage;
+    let stageX = 0;
+    let stageY = compact ? 0 : 0.45;
+    let stageScale = compact ? MOBILE_SCENE_SCALE : 0.8;
+
+    if (stage === "right" && !compact) {
+      const shapeIndex = Math.min(
+        SHAPE_WIDTHS.length - 1,
+        Math.max(0, Math.round(current.shape)),
+      );
+      stageX = (RIGHT_STAGE_CENTER - 0.5) * state.viewport.width;
+      stageScale = (RIGHT_STAGE_WIDTH * state.viewport.width) / SHAPE_WIDTHS[shapeIndex];
+      stageY = 0;
+    } else if (stage === "hidden") {
+      stageY = 0;
+    }
+
+    group.position.x = THREE.MathUtils.damp(
+      group.position.x,
+      stageX + current.x,
+      3,
+      d,
+    );
+    group.position.y = THREE.MathUtils.damp(group.position.y, stageY, 3, d);
+    group.scale.setScalar(
+      THREE.MathUtils.damp(group.scale.x, stageScale, 3, d),
+    );
     group.rotation.y = current.rotY + scene.progress * 0.9;
 
     const camera = state.camera;
     camera.position.z = current.camZ;
+    const parallax = stage === "hero" ? 0.4 : 0;
     camera.position.x = THREE.MathUtils.damp(
       camera.position.x,
-      pointer.x * 0.4,
+      pointer.x * parallax,
       2,
       d,
     );

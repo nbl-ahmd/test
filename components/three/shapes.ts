@@ -8,7 +8,12 @@ export type ShapeAttributes = {
   ];
   rand: Float32Array;
   scale: Float32Array;
+  /** 1 where a point belongs to a cube edge (shape 2), 0 for face grid. */
+  edge: Float32Array;
 };
+
+/** Fraction of cube points that trace edges; the rest fill the face grids. */
+const CUBE_EDGE_RATIO = 0.72;
 
 function mulberry32(seed: number): () => number {
   let a = seed >>> 0;
@@ -21,17 +26,57 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-/** 0 — loose drifting volume */
+/**
+ * 0 — a loosely woven volume: jittered warp (vertical) and weft (horizontal)
+ * strands drifting in depth, so the very first screen already reads as weave
+ * rather than uniform dust.
+ */
 function cloud(count: number, rnd: () => number): Float32Array {
   const out = new Float32Array(count * 3);
-  for (let i = 0; i < count; i += 1) {
-    const theta = rnd() * Math.PI * 2;
-    const phi = Math.acos(2 * rnd() - 1);
-    const r = Math.cbrt(rnd()) * 3.4;
-    out[i * 3] = r * Math.sin(phi) * Math.cos(theta) * 1.2;
-    out[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.74;
-    out[i * 3 + 2] = r * Math.cos(phi) * 0.9;
+  const width = 6.6;
+  const height = 4.2;
+  const depth = 1.5;
+  const amp = 0.24;
+
+  const warpCount = Math.floor(count / 2);
+  const warpThreads = 92;
+  const warpPer = Math.max(1, Math.ceil(warpCount / warpThreads));
+
+  for (let i = 0; i < warpCount; i += 1) {
+    const k = i % warpThreads;
+    const j = Math.floor(i / warpThreads);
+    const t = j / Math.max(1, warpPer - 1);
+    const threadZ = (k / (warpThreads - 1) - 0.5) * depth;
+    const over = ((k + j) % 2 === 0 ? 1 : -1) * amp;
+    out[i * 3] =
+      (k / (warpThreads - 1) - 0.5) * width +
+      Math.sin(t * Math.PI * 2 + k * 0.7) * 0.18 +
+      (rnd() - 0.5) * 0.06;
+    out[i * 3 + 1] = (t - 0.5) * height + (rnd() - 0.5) * 0.05;
+    out[i * 3 + 2] =
+      threadZ + over + Math.sin(t * Math.PI * 7 + k * 0.35) * 0.12;
   }
+
+  const weftCount = count - warpCount;
+  const weftThreads = 68;
+  const weftPer = Math.max(1, Math.ceil(weftCount / weftThreads));
+
+  for (let i = warpCount; i < count; i += 1) {
+    const local = i - warpCount;
+    const k = local % weftThreads;
+    const j = Math.floor(local / weftThreads);
+    const t = j / Math.max(1, weftPer - 1);
+    const threadZ = (k / (weftThreads - 1) - 0.5) * depth;
+    const over = ((k + j) % 2 === 0 ? -1 : 1) * amp;
+    out[i * 3] = (t - 0.5) * width + (rnd() - 0.5) * 0.05;
+    out[i * 3 + 1] =
+      (k / (weftThreads - 1) - 0.5) * height +
+      Math.sin(t * Math.PI * 2 + k * 0.6) * 0.16 +
+      (rnd() - 0.5) * 0.06;
+    out[i * 3 + 2] =
+      threadZ + over + Math.sin(t * Math.PI * 6 + k * 0.3) * 0.12;
+  }
+
   return out;
 }
 
@@ -113,7 +158,7 @@ function cube(count: number, rnd: () => number): Float32Array {
     [3, 7],
   ];
 
-  const edgeCount = Math.floor(count * 0.72);
+  const edgeCount = Math.floor(count * CUBE_EDGE_RATIO);
   for (let i = 0; i < edgeCount; i += 1) {
     const edge = edges[Math.floor(rnd() * edges.length)];
     const a = vertices[edge[0]];
@@ -188,10 +233,13 @@ export function createShapeAttributes(count: number): ShapeAttributes {
 
   const rand = new Float32Array(count);
   const scale = new Float32Array(count);
+  const edge = new Float32Array(count);
+  const cubeEdgeCount = Math.floor(count * CUBE_EDGE_RATIO);
   for (let i = 0; i < count; i += 1) {
     rand[i] = rnd();
-    scale[i] = 0.55 + rnd() * 1.1;
+    scale[i] = 0.5 + rnd() * 0.85;
+    edge[i] = i < cubeEdgeCount ? 1 : 0;
   }
 
-  return { positions, rand, scale };
+  return { positions, rand, scale, edge };
 }

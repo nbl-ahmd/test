@@ -12,7 +12,7 @@
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
   --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
 
-  --text-display: clamp(3.5rem, 11vw, 12rem);
+  --text-display: clamp(2.6rem, 11vw, 12rem);
   --text-display--line-height: 0.9;
   --text-display--letter-spacing: -0.045em;
 
@@ -22,12 +22,27 @@
 }
 
 @layer base {
+  :root {
+    /* One layout system: every left edge — header, hero, sections, footer —
+       resolves to this gutter so the page shares a single vertical rail. */
+    --gutter: clamp(20px, 4vw, 64px);
+    /* Approximate rendered header height (wordmark + vertical padding). */
+    --header-h: 4.5rem;
+  }
+
   *,
   ::before,
   ::after,
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-line);
+  }
+
+  /* Anchor targets clear the fixed header with generous breathing room so no
+     section label ever lands flush under the chrome. */
+  main [id],
+  section[id] {
+    scroll-margin-top: calc(var(--header-h) + 4rem);
   }
 
   html {
@@ -84,6 +99,36 @@
     font-style: italic;
     font-weight: 400;
     letter-spacing: -0.01em;
+  }
+
+  /* The shared 12-column measure used inside <Container>. */
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  /* Soft paper-toned halo so hero copy stays legible over the woven scene
+     without turning into an opaque card. Sits above the fixed scene because
+     the section creates its own stacking context. */
+  .text-scrim {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .text-scrim::before {
+    content: "";
+    position: absolute;
+    inset: -0.6em -1.1em;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 0.75rem;
+    background: radial-gradient(
+      120% 140% at 18% 50%,
+      rgba(10, 10, 11, 0.9) 0%,
+      rgba(10, 10, 11, 0.68) 48%,
+      rgba(10, 10, 11, 0) 100%
+    );
   }
 
   /* Static backdrop behind the 3D scene (and the only backdrop without WebGL) */
@@ -168,8 +213,8 @@ html[data-intro="pending"] [data-intro-hide] {
   }
 }
 
-/* Higher-contrast preference: push muted text to full fg, drop the grain and
-   strengthen scrims. Scene dim is capped in JS (lib/scene-keyframes.ts). */
+/* Higher-contrast preference: push muted text to full fg and drop the grain.
+   Scene dim is capped in JS (lib/scene-keyframes.ts). */
 @media (prefers-contrast: more) {
   :root {
     --color-muted: var(--color-fg);
@@ -181,6 +226,6 @@ html[data-intro="pending"] [data-intro-hide] {
   }
 
   .text-scrim::before {
-    background: rgba(10, 10, 11, 0.88);
+    background: rgba(10, 10, 11, 0.9);
   }
 }

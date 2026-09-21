@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import ContactForm from "@/components/ui/ContactForm";
+import Container from "@/components/layout/Container";
 
 export default function Contact() {
   const { contact } = site;
@@ -8,9 +9,9 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto grid w-full max-w-6xl gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <Container className="grid gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div>
           <p className="label text-muted">{contact.label}</p>
           <h2
@@ -54,7 +55,7 @@ export default function Contact() {
             <p className="text-muted">{contact.nda}</p>
           </div>
         </aside>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -7,6 +7,7 @@ import { site } from "@/content/site";
 import { scrollToId, scrollToTop } from "@/lib/scroll";
 import Magnetic from "@/components/ui/Magnetic";
 import MenuOverlay from "@/components/layout/MenuOverlay";
+import Container from "@/components/layout/Container";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -70,7 +71,7 @@ export default function Header() {
         ref={headerRef}
         className="fixed inset-x-0 top-0 z-50 will-change-transform"
       >
-        <div className="flex items-center justify-between px-5 py-4 md:px-8 md:py-5">
+        <Container className="flex items-center justify-between py-4 md:py-5">
           <a
             href="#hero"
             onClick={handleTop}
@@ -80,7 +81,7 @@ export default function Header() {
             <span className="align-super text-[0.55em]">{site.mark}</span>
           </a>
 
-          <div className="flex items-center gap-3 md:gap-6">
+          <div className="flex items-center gap-2 md:gap-6">
             <button
               ref={menuButtonRef}
               type="button"
@@ -88,7 +89,7 @@ export default function Header() {
               aria-haspopup="dialog"
               aria-expanded={open}
               aria-controls="site-menu"
-              className="label text-muted transition-colors hover:text-fg"
+              className="label inline-flex items-center px-1 py-2 text-muted transition-colors hover:text-fg"
             >
               Menu
             </button>
@@ -98,13 +99,13 @@ export default function Header() {
                 href={site.cta.href}
                 data-cursor="open"
                 onClick={(event) => handleNav(event, "contact")}
-                className="label inline-flex items-center rounded-full border border-line px-4 py-2.5 transition-colors hover:border-fg hover:bg-fg hover:text-bg md:px-5"
+                className="label inline-flex items-center rounded-full border border-line px-4 py-2.5 whitespace-nowrap transition-colors hover:border-fg hover:bg-fg hover:text-bg md:px-5"
               >
                 {site.cta.label}
               </a>
             </Magnetic>
           </div>
-        </div>
+        </Container>
       </header>
 
       <MenuOverlay open={open} onClose={closeMenu} />

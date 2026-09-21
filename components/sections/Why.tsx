@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import Reveal from "@/components/ui/Reveal";
 import Tick from "@/components/ui/Tick";
+import Container from "@/components/layout/Container";
 
 export default function Why() {
   const { why } = site;
@@ -9,9 +10,9 @@ export default function Why() {
     <section
       id="why"
       aria-labelledby="why-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <Container>
         <p className="label text-muted">{why.label}</p>
         <h2
           id="why-title"
@@ -45,7 +46,7 @@ export default function Why() {
             </div>
           ))}
         </Reveal>
-      </div>
+      </Container>
     </section>
   );
 }

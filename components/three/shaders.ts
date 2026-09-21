@@ -73,6 +73,7 @@ uniform float uShape;
 uniform float uDim;
 uniform float uTurbulence;
 uniform float uSize;
+uniform float uMaxSize;
 uniform float uPixelRatio;
 uniform float uAccent;
 uniform float uVelocity;
@@ -87,6 +88,8 @@ attribute vec3 aPos3;
 attribute vec3 aPos4;
 attribute float aRand;
 attribute float aScale;
+/** 1 on cube edges, 0 on the cube face grid. */
+attribute float aEdge;
 
 varying vec3 vColor;
 varying float vAlpha;
@@ -115,33 +118,57 @@ vec3 shapePosition() {
 
 void main() {
   vec3 pos = shapePosition();
+  float shape = clamp(uShape, 0.0, 4.0);
 
-  // Clouds drift; woven structures stay tight. Scroll velocity adds energy.
+  // Only the cloud (shape 0) is turbulent; the weave, cube, helix and knot
+  // stay crisp geometry. Scroll velocity adds a touch of energy to the cloud.
+  float cloudMask = 1.0 - smoothstep(0.0, 0.75, shape);
   float speed = clamp(abs(uVelocity), 0.0, 1.5);
-  float turbScale = uTurbulence * mix(1.0, 0.28, smoothstep(0.0, 1.0, uShape)) + speed * 0.22;
+  float turbScale = uTurbulence * cloudMask + speed * 0.16 * cloudMask;
   float n1 = snoise(pos * 0.42 + vec3(0.0, 0.0, uTime * 0.12));
   float n2 = snoise(pos * 0.42 + vec3(31.7, 7.3, uTime * 0.12));
   float n3 = snoise(pos * 0.42 + vec3(11.1, 53.9, uTime * 0.12));
   pos += vec3(n1, n2, n3) * turbScale * (0.55 + aRand * 0.85);
 
+  // Cube masks: edges and face grid read as two distinct weights.
+  float cubeMask = smoothstep(0.5, 1.0, 1.0 - abs(shape - 2.0));
+  float edgeMask = cubeMask * aEdge;
+  float gridMask = cubeMask * (1.0 - aEdge);
+
   vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
   vec4 clip = projectionMatrix * mvPosition;
   vec2 ndc = clip.xy / max(clip.w, 0.0001);
+
+  // Mouse repulsion only affects the cloud and the knot, with a soft falloff
+  // and a gentle push — never a crater in the cube.
+  float knotMask = smoothstep(3.5, 4.0, shape);
+  float repulseMask = max(cloudMask, knotMask);
   vec2 delta = ndc - uMouse;
-  float force = 1.0 - smoothstep(0.0, 0.42, length(delta));
-  mvPosition.xy += normalize(delta + 0.0001) * force * 0.35;
+  float force = (1.0 - smoothstep(0.0, 0.6, length(delta))) * repulseMask;
+  mvPosition.xy += normalize(delta + 0.0001) * force * 0.15;
 
   // Scroll velocity smears points along the scroll direction, then settles.
-  mvPosition.y += uVelocity * 0.18 * (0.35 + aRand);
+  mvPosition.y += uVelocity * 0.16 * (0.35 + aRand) * cloudMask;
 
   gl_Position = projectionMatrix * mvPosition;
-  gl_PointSize = uSize * aScale * uPixelRatio * (1.0 + speed * 0.3) * (1.0 / max(-mvPosition.z, 0.1));
+
+  float sizeMul = mix(1.0, 0.75, edgeMask);
+  sizeMul = mix(sizeMul, 0.55, gridMask);
+  float size = uSize * aScale * sizeMul * (1.0 + speed * 0.2);
+  gl_PointSize = min(
+    size * uPixelRatio / max(-mvPosition.z, 0.1),
+    uMaxSize * uPixelRatio
+  );
 
   float accent = smoothstep(1.0 - uAccent, 1.0, aRand);
-  vColor = mix(uColorA, uColorB, accent);
+  vec3 color = mix(uColorA, uColorB, accent);
+  color = mix(color, uColorB, edgeMask * 0.35);
+  vColor = color;
 
-  float twinkle = 0.72 + 0.28 * sin(uTime * 1.6 + aRand * 42.0);
-  vAlpha = uDim * twinkle * (0.26 + 0.38 * aScale);
+  float twinkle = 0.8 + 0.2 * sin(uTime * 1.6 + aRand * 42.0);
+  float alphaMul = mix(1.0, 0.6, edgeMask);
+  alphaMul = mix(alphaMul, 0.25, gridMask);
+  vAlpha = uDim * twinkle * (0.12 + 0.2 * aScale) * alphaMul;
 }
 `;
 

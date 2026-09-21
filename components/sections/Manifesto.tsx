@@ -6,6 +6,7 @@ import { gsap, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
 import Reveal from "@/components/ui/Reveal";
+import Container from "@/components/layout/Container";
 
 export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -80,9 +81,9 @@ export default function Manifesto() {
         ref={sectionRef}
         id="manifesto"
         aria-label="Manifesto"
-        className="relative z-10 flex min-h-svh items-center border-t border-line px-5 py-24 md:px-8"
+        className="relative z-10 flex min-h-svh items-center border-t border-line py-24"
       >
-        <div className="mx-auto w-full max-w-5xl">
+        <Container>
           <p className="label text-muted">{site.manifesto.label}</p>
           <p className="sr-only">{site.manifesto.body}</p>
           <p
@@ -92,15 +93,16 @@ export default function Manifesto() {
           >
             {site.manifesto.body}
           </p>
-        </div>
+        </Container>
       </section>
 
       <section
         id="principles"
         aria-label="Principles"
-        className="relative z-10 border-t border-line px-5 py-20 md:px-8 md:py-28"
+        className="relative z-10 border-t border-line py-20 md:py-28"
       >
-        <Reveal className="mx-auto grid w-full max-w-5xl gap-10 md:grid-cols-3">
+        <Container>
+        <Reveal className="grid gap-10 md:grid-cols-3">
           {site.manifesto.principles.map((principle) => (
             <article key={principle.title} data-reveal>
               <p className="label text-muted">{principle.index}</p>
@@ -111,6 +113,7 @@ export default function Manifesto() {
             </article>
           ))}
         </Reveal>
+        </Container>
       </section>
     </>
   );

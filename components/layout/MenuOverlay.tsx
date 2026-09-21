@@ -6,6 +6,7 @@ import { gsap, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { scrollToId, startScroll, stopScroll } from "@/lib/scroll";
 import { prefersReducedMotion } from "@/lib/motion";
+import Container from "@/components/layout/Container";
 
 type MenuOverlayProps = {
   open: boolean;
@@ -147,17 +148,22 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
       className="invisible fixed inset-0 z-[60]"
     >
       <div ref={panelRef} className="absolute inset-0 flex flex-col bg-bg">
-        <div className="flex items-center justify-between px-5 py-4 md:px-8 md:py-5">
+        <Container className="flex items-center justify-between py-4 md:py-5">
           <span className="font-medium tracking-tight">
             {site.wordmark}
             <span className="align-super text-[0.55em]">{site.mark}</span>
           </span>
-          <button ref={closeRef} type="button" onClick={onClose} className="label">
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            className="label inline-flex items-center px-1 py-2"
+          >
             Close
           </button>
-        </div>
+        </Container>
 
-        <nav className="flex flex-1 flex-col justify-center gap-1 px-5 md:px-8">
+        <Container as="nav" className="flex flex-1 flex-col justify-center gap-1">
           {site.nav.map((item) => (
             <a
               key={item.id}
@@ -177,9 +183,9 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
               </span>
             </a>
           ))}
-        </nav>
+        </Container>
 
-        <div className="flex flex-wrap items-center justify-between gap-4 px-5 pb-6 md:px-8">
+        <Container className="flex flex-wrap items-center justify-between gap-4 pb-6">
           <a
             data-menu-item
             href={`mailto:${site.email}`}
@@ -202,7 +208,7 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
               </li>
             ))}
           </ul>
-        </div>
+        </Container>
       </div>
     </div>
   );

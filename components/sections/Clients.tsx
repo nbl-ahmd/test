@@ -1,14 +1,15 @@
 import { site } from "@/content/site";
 import Reveal from "@/components/ui/Reveal";
+import Container from "@/components/layout/Container";
 
 export default function Clients() {
   return (
     <section
       id="clients"
       aria-labelledby="clients-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <Container>
         <p className="label text-muted">{site.clients.label}</p>
         <h2
           id="clients-title"
@@ -32,7 +33,7 @@ export default function Clients() {
             </article>
           ))}
         </Reveal>
-      </div>
+      </Container>
     </section>
   );
 }

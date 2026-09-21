@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
+import Container from "@/components/layout/Container";
 
 export default function Process() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -51,9 +52,9 @@ export default function Process() {
       ref={sectionRef}
       id="process"
       aria-labelledby="process-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <Container>
         <p className="label text-muted">{site.process.label}</p>
         <h2
           id="process-title"
@@ -112,7 +113,7 @@ export default function Process() {
             ))}
           </ol>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import Reveal from "@/components/ui/Reveal";
+import Container from "@/components/layout/Container";
 
 export default function Testimonials() {
   const items = site.testimonials;
@@ -9,9 +10,9 @@ export default function Testimonials() {
     <section
       id="testimonials"
       aria-labelledby="testimonials-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <Container>
         <h2 id="testimonials-title" className="label text-muted">
           ( what clients say )
         </h2>
@@ -33,7 +34,7 @@ export default function Testimonials() {
             </figure>
           ))}
         </Reveal>
-      </div>
+      </Container>
     </section>
   );
 }

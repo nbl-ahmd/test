@@ -1,6 +1,16 @@
+/**
+ * Where the scene lives relative to the text:
+ * - `hero`   centred stage (used by the hero and full-bleed pinned sections)
+ * - `right`  shape group centred at 72vw, ~30vw wide, text in columns 1–7
+ * - `hidden` dimmed to nothing behind light "paper" sections
+ */
+export type SceneStage = "hero" | "right" | "hidden";
+
 export type SceneTarget = {
   shape: number;
   dim: number;
+  stage: SceneStage;
+  /** Manual world-space offset added on top of the stage-derived position. */
   x: number;
   camZ: number;
   rotY: number;
@@ -27,6 +37,7 @@ export type SceneStore = {
 const DEFAULTS: SceneTarget = {
   shape: 0,
   dim: 1,
+  stage: "hero",
   x: 0,
   camZ: 6.5,
   rotY: 0,

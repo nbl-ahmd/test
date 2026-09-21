@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import Reveal from "@/components/ui/Reveal";
 import RollingCounter from "@/components/ui/RollingCounter";
+import Container from "@/components/layout/Container";
 
 export default function Commitments() {
   const { commitments } = site;
@@ -9,9 +10,9 @@ export default function Commitments() {
     <section
       id="commitments"
       aria-labelledby="commitments-title"
-      className="relative z-10 border-t border-line px-5 py-24 md:px-8 md:py-32"
+      className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <div className="mx-auto w-full max-w-6xl">
+      <Container>
         <h2 id="commitments-title" className="label text-muted">
           {commitments.label}
         </h2>
@@ -30,7 +31,7 @@ export default function Commitments() {
         <p className="mt-14 text-lg text-fg/85 md:text-xl">
           {commitments.line}
         </p>
-      </div>
+      </Container>
     </section>
   );
 }
