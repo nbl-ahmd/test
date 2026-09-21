@@ -83,11 +83,16 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
   );
 
   useEffect(() => {
+    const main = document.getElementById("main");
+
     if (!open) {
+      main?.removeAttribute("inert");
       document.body.style.overflow = "";
       startScroll();
       return;
     }
+
+    main?.setAttribute("inert", "");
 
     const root = rootRef.current;
     if (!root) return;
@@ -120,7 +125,10 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
     };
 
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    return () => {
+      main?.removeAttribute("inert");
+      document.removeEventListener("keydown", onKeyDown);
+    };
   }, [open, onClose]);
 
   const handleNav = (event: MouseEvent<HTMLAnchorElement>, id: string) => {

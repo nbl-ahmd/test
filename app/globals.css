@@ -3,7 +3,8 @@
 @theme {
   --color-bg: #0a0a0b;
   --color-fg: #ecebe6;
-  --color-muted: #8b8a85;
+  --color-muted: #a9a8a2;
+  --color-subtle: #6e6d68;
   --color-line: rgba(236, 235, 230, 0.12);
   --color-accent: #c8ff2e;
 
@@ -15,8 +16,8 @@
   --text-display--line-height: 0.9;
   --text-display--letter-spacing: -0.045em;
 
-  --text-label: 0.6875rem;
-  --text-label--line-height: 1;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.1;
   --text-label--letter-spacing: 0.08em;
 }
 
@@ -40,8 +41,14 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-sans);
+    font-size: 1rem;
     font-weight: 400;
+    line-height: 1.6;
     overflow-x: clip;
+  }
+
+  p {
+    line-height: 1.6;
   }
 
   ::selection {
@@ -77,6 +84,26 @@
     font-style: italic;
     font-weight: 400;
     letter-spacing: -0.01em;
+  }
+
+  /* Readability scrim for text placed over the particle scene. */
+  .text-scrim {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .text-scrim::before {
+    content: "";
+    position: absolute;
+    inset: -2rem;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      115% 115% at 50% 50%,
+      rgba(10, 10, 11, 0.78) 0%,
+      rgba(10, 10, 11, 0.58) 58%,
+      rgba(10, 10, 11, 0) 100%
+    );
   }
 
   /* Static backdrop behind the 3D scene (and the only backdrop without WebGL) */
@@ -129,10 +156,12 @@ html[data-intro="pending"] [data-intro-hide] {
   opacity: 0;
 }
 
-/* Custom cursor: hide the native one only when it is actually replaced */
+/* Custom cursor: hide the native one only when it is actually replaced, and
+   never on fields where the native caret/cursor carries meaning. */
 @media (pointer: fine) {
-  html[data-custom-cursor="true"],
-  html[data-custom-cursor="true"] * {
+  html[data-custom-cursor="true"] *:not(input):not(textarea):not(select):not(
+      [contenteditable="true"]
+    ) {
     cursor: none;
   }
 }
@@ -145,5 +174,22 @@ html[data-intro="pending"] [data-intro-hide] {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Higher-contrast preference: push muted text to full fg, drop the grain and
+   strengthen scrims. Scene dim is capped in JS (lib/scene-keyframes.ts). */
+@media (prefers-contrast: more) {
+  :root {
+    --color-muted: var(--color-fg);
+    --color-subtle: #a9a8a2;
+  }
+
+  .grain-overlay {
+    display: none;
+  }
+
+  .text-scrim::before {
+    background: rgba(10, 10, 11, 0.88);
   }
 }

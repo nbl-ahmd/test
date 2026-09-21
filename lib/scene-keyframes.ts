@@ -1,4 +1,5 @@
 import { setSceneTarget, type SceneTarget } from "@/lib/scene-store";
+import { prefersMoreContrast } from "@/lib/motion";
 
 export type SectionKeyframe = SceneTarget;
 
@@ -30,6 +31,7 @@ export const PROCESS_CAM = { from: 12.5, to: -9 };
 export const CONTACT_CAM = { from: 6.5, to: 4.6 };
 
 export const MOBILE_MAX_DIM = 0.35;
+export const CONTRAST_MAX_DIM = 0.15;
 export const MOBILE_BREAKPOINT = 768;
 
 export function isCompactViewport(): boolean {
@@ -41,9 +43,15 @@ export function resolveKeyframe(id: string): SectionKeyframe | null {
   if (!keyframe) return null;
 
   const compact = isCompactViewport();
+  const moreContrast = prefersMoreContrast();
+
+  let dim = keyframe.dim;
+  if (compact) dim = Math.min(dim, MOBILE_MAX_DIM);
+  if (moreContrast) dim = Math.min(dim, CONTRAST_MAX_DIM);
+
   return {
     ...keyframe,
-    dim: compact ? Math.min(keyframe.dim, MOBILE_MAX_DIM) : keyframe.dim,
+    dim,
     x: compact ? 0 : keyframe.x,
   };
 }

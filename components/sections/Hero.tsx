@@ -88,7 +88,7 @@ export default function Hero() {
         {site.hero.label}
       </p>
 
-      <div className="mt-auto">
+      <div className="text-scrim mt-auto">
         <h1
           ref={titleRef}
           id="hero-title"
@@ -102,7 +102,7 @@ export default function Hero() {
         <p
           data-intro-hide
           data-hero-fade
-          className="mt-8 max-w-xl text-lg text-pretty text-muted md:text-xl"
+          className="mt-8 max-w-xl text-[1.125rem] leading-[1.6] text-pretty text-fg/85 md:text-[1.375rem]"
         >
           {site.hero.sub}
         </p>
@@ -111,7 +111,7 @@ export default function Hero() {
       <div
         data-intro-hide
         data-hero-fade
-        className="mt-12 flex flex-wrap items-end justify-between gap-6 border-t border-line pt-5"
+        className="text-scrim mt-12 flex flex-wrap items-end justify-between gap-6 border-t border-line pt-5"
       >
         <span className="label text-muted">{site.hero.scrollLabel}</span>
         <span className="label inline-flex items-center gap-2 text-muted">

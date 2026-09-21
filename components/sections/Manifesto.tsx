@@ -17,7 +17,7 @@ export default function Manifesto() {
       if (!section || !text) return;
       if (prefersReducedMotion()) return;
 
-      const split = SplitText.create(text, { type: "words", aria: "auto" });
+      const split = SplitText.create(text, { type: "words", aria: "none" });
 
       const mm = gsap.matchMedia();
       mm.add("(min-width: 768px)", () => {
@@ -80,11 +80,13 @@ export default function Manifesto() {
       aria-label="Manifesto"
       className="relative z-10 flex min-h-svh items-center border-t border-line px-5 py-24 md:px-8"
     >
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="text-scrim mx-auto w-full max-w-5xl">
         <p className="label text-muted">{site.manifesto.label}</p>
+        <p className="sr-only">{site.manifesto.body}</p>
         <p
           ref={textRef}
-          className="mt-8 text-[clamp(1.6rem,4vw,3.4rem)] leading-[1.18] font-medium tracking-[-0.03em] text-balance"
+          aria-hidden="true"
+          className="mt-8 text-[clamp(1.6rem,4vw,3.4rem)] leading-[1.5] font-medium tracking-[-0.03em] text-balance"
         >
           {site.manifesto.body}
         </p>

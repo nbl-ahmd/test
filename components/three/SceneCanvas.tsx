@@ -28,7 +28,7 @@ export default function SceneCanvas() {
     <>
       <div aria-hidden="true" className="scene-fallback fixed inset-0 z-0" />
       {enabled ? (
-        <div className="pointer-events-none fixed inset-0 z-0">
+        <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
           <WeaveScene />
         </div>
       ) : null}

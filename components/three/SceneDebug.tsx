@@ -92,7 +92,7 @@ export default function SceneDebug() {
   if (!enabled) return null;
 
   return (
-    <div className="fixed right-4 bottom-4 z-[80] font-mono text-[11px] leading-tight">
+    <div className="fixed right-4 bottom-4 z-[80] font-mono text-[12px] leading-tight">
       <div className="overflow-hidden rounded-md border border-line bg-bg/90 backdrop-blur">
         <button
           type="button"

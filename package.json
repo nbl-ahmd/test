@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:a11y": "node scripts/axe.mjs",
+    "audit:lighthouse": "mkdir -p .audit && lighthouse http://localhost:3000/ --only-categories=accessibility,performance,seo --chrome-flags=\"--headless=new --no-sandbox\" --output=json --output-path=./.audit/lighthouse.json --quiet"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -27,8 +29,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.186.0",
+    "axe-core": "^4.13.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "lighthouse": "^13.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
