@@ -7,6 +7,7 @@ import Header from "@/components/layout/Header";
 import Grain from "@/components/ui/Grain";
 import Cursor from "@/components/ui/Cursor";
 import SceneCanvas from "@/components/three/SceneCanvas";
+import SceneSections from "@/components/three/SceneSections";
 import SceneDebug from "@/components/three/SceneDebug";
 import Preloader from "@/components/sections/Preloader";
 import { site } from "@/content/site";
@@ -91,10 +92,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll>
           <Header />
           <main id="main">{children}</main>
+          <SceneSections />
         </SmoothScroll>
         <Grain />
         <Cursor />
-        {process.env.NODE_ENV !== "production" ? <SceneDebug /> : null}
+        <SceneDebug />
       </body>
     </html>
   );

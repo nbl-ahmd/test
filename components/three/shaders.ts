@@ -75,6 +75,7 @@ uniform float uTurbulence;
 uniform float uSize;
 uniform float uPixelRatio;
 uniform float uAccent;
+uniform float uVelocity;
 uniform vec2 uMouse;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
@@ -115,8 +116,9 @@ vec3 shapePosition() {
 void main() {
   vec3 pos = shapePosition();
 
-  // Clouds drift; woven structures stay tight.
-  float turbScale = uTurbulence * mix(1.0, 0.28, smoothstep(0.0, 1.0, uShape));
+  // Clouds drift; woven structures stay tight. Scroll velocity adds energy.
+  float speed = clamp(abs(uVelocity), 0.0, 1.5);
+  float turbScale = uTurbulence * mix(1.0, 0.28, smoothstep(0.0, 1.0, uShape)) + speed * 0.22;
   float n1 = snoise(pos * 0.42 + vec3(0.0, 0.0, uTime * 0.12));
   float n2 = snoise(pos * 0.42 + vec3(31.7, 7.3, uTime * 0.12));
   float n3 = snoise(pos * 0.42 + vec3(11.1, 53.9, uTime * 0.12));
@@ -129,8 +131,11 @@ void main() {
   float force = 1.0 - smoothstep(0.0, 0.42, length(delta));
   mvPosition.xy += normalize(delta + 0.0001) * force * 0.35;
 
+  // Scroll velocity smears points along the scroll direction, then settles.
+  mvPosition.y += uVelocity * 0.18 * (0.35 + aRand);
+
   gl_Position = projectionMatrix * mvPosition;
-  gl_PointSize = uSize * aScale * uPixelRatio * (1.0 / max(-mvPosition.z, 0.1));
+  gl_PointSize = uSize * aScale * uPixelRatio * (1.0 + speed * 0.3) * (1.0 / max(-mvPosition.z, 0.1));
 
   float accent = smoothstep(1.0 - uAccent, 1.0, aRand);
   vColor = mix(uColorA, uColorB, accent);

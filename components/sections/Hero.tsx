@@ -6,7 +6,6 @@ import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { onRevealed } from "@/lib/intro";
 import { prefersReducedMotion } from "@/lib/motion";
-import { setSceneTarget } from "@/lib/scene-store";
 import LocalTime from "@/components/ui/LocalTime";
 
 export default function Hero() {
@@ -19,16 +18,6 @@ export default function Hero() {
       const section = sectionRef.current;
       const title = titleRef.current;
       if (!section || !title) return;
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top bottom",
-        end: "bottom top",
-        onEnter: () =>
-          setSceneTarget({ shape: 0, dim: 1, camZ: 6.5, turbulence: 0.35 }),
-        onEnterBack: () =>
-          setSceneTarget({ shape: 0, dim: 1, camZ: 6.5, turbulence: 0.35 }),
-      });
 
       if (prefersReducedMotion()) return;
 
@@ -91,7 +80,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      id="top"
+      id="hero"
       aria-labelledby="hero-title"
       className="relative z-10 flex min-h-svh flex-col px-5 pt-24 pb-8 md:px-8 md:pt-28 md:pb-10"
     >

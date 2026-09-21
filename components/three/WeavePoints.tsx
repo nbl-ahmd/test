@@ -41,6 +41,7 @@ export default function WeavePoints({ count }: { count: number }) {
       uSize: { value: 20 },
       uPixelRatio: { value: 1 },
       uAccent: { value: 0.08 },
+      uVelocity: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uColorA: { value: COLOR_FG.clone() },
       uColorB: { value: COLOR_ACCENT.clone() },
@@ -58,6 +59,7 @@ export default function WeavePoints({ count }: { count: number }) {
 
     current.shape = THREE.MathUtils.damp(current.shape, target.shape, 3, d);
     current.dim = THREE.MathUtils.damp(current.dim, target.dim, 4, d);
+    current.x = THREE.MathUtils.damp(current.x, target.x, 3, d);
     current.camZ = THREE.MathUtils.damp(current.camZ, target.camZ, 3, d);
     current.rotY = THREE.MathUtils.damp(current.rotY, target.rotY, 3, d);
     current.turbulence = THREE.MathUtils.damp(
@@ -70,7 +72,8 @@ export default function WeavePoints({ count }: { count: number }) {
     pointer.x = THREE.MathUtils.damp(pointer.x, pointer.targetX, 3, d);
     pointer.y = THREE.MathUtils.damp(pointer.y, pointer.targetY, 3, d);
 
-    group.rotation.y = current.rotY;
+    group.position.x = THREE.MathUtils.damp(group.position.x, current.x, 3, d);
+    group.rotation.y = current.rotY + scene.progress * 0.9;
 
     const camera = state.camera;
     camera.position.z = current.camZ;
@@ -93,6 +96,7 @@ export default function WeavePoints({ count }: { count: number }) {
     material.uniforms.uShape.value = current.shape;
     material.uniforms.uDim.value = current.dim;
     material.uniforms.uTurbulence.value = current.turbulence;
+    material.uniforms.uVelocity.value = scene.velocity;
     material.uniforms.uPixelRatio.value = state.viewport.dpr;
     material.uniforms.uAccent.value = THREE.MathUtils.lerp(
       0.08,

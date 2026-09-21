@@ -2,10 +2,9 @@
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
+import { gsap, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
-import { setSceneTarget } from "@/lib/scene-store";
 
 export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -17,16 +16,6 @@ export default function Manifesto() {
       const text = textRef.current;
       if (!section || !text) return;
       if (prefersReducedMotion()) return;
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top 60%",
-        end: "bottom 40%",
-        onEnter: () =>
-          setSceneTarget({ shape: 1, dim: 1, camZ: 7.2, turbulence: 0.16 }),
-        onEnterBack: () =>
-          setSceneTarget({ shape: 1, dim: 1, camZ: 7.2, turbulence: 0.16 }),
-      });
 
       const split = SplitText.create(text, { type: "words", aria: "auto" });
 
