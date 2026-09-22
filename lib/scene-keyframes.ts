@@ -37,14 +37,18 @@ export const PROCESS_CAM = { from: 12.5, to: -9 };
 export const CONTACT_CAM = { from: 6.5, to: 4.6 };
 
 export const MOBILE_MAX_DIM = 0.2;
+export const TABLET_MAX_DIM = 0.3;
 export const CONTRAST_MAX_DIM = 0.15;
 export const MOBILE_BREAKPOINT = 768;
+export const TABLET_BREAKPOINT = 1024;
 
-/** Desktop "right" stage geometry, expressed as fractions of the viewport. */
+/** Desktop "right" stage geometry, expressed as fractions of the container. */
 export const RIGHT_STAGE_CENTER = 0.72;
 export const RIGHT_STAGE_WIDTH = 0.3;
 /** On phones the scene sits centred behind the text, small and dim. */
 export const MOBILE_SCENE_SCALE = 0.7;
+/** Tablet portrait: upper-right, smaller than desktop. */
+export const TABLET_SCENE_SCALE = 0.6;
 
 export function isCompactViewport(): boolean {
   return typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
@@ -55,10 +59,15 @@ export function resolveKeyframe(id: string): SectionKeyframe | null {
   if (!keyframe) return null;
 
   const compact = isCompactViewport();
+  const tablet =
+    typeof window !== "undefined" &&
+    window.innerWidth >= MOBILE_BREAKPOINT &&
+    window.innerWidth < TABLET_BREAKPOINT;
   const moreContrast = prefersMoreContrast();
 
   let dim = keyframe.dim;
   if (compact) dim = Math.min(dim, MOBILE_MAX_DIM);
+  else if (tablet) dim = Math.min(dim, TABLET_MAX_DIM);
   if (moreContrast) dim = Math.min(dim, CONTRAST_MAX_DIM);
 
   return {

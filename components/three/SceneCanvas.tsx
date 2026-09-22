@@ -2,8 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { hasWebGL } from "@/lib/scene-quality";
-import { prefersReducedMotion } from "@/lib/motion";
+import { getSceneQuality, hasWebGL } from "@/lib/scene-quality";
 
 const WeaveScene = dynamic(() => import("./WeaveScene"), { ssr: false });
 
@@ -16,6 +15,17 @@ export default function SceneCanvas() {
     () => false,
   );
   const [ready, setReady] = useState(false);
+
+  // Tier is resolved on the client only, after first paint, so the canvas
+  // never blocks LCP and SSR output stays identical.
+  const quality = useMemo(
+    () => (mounted ? getSceneQuality() : null),
+    [mounted],
+  );
+  const webgl = useMemo(
+    () => (mounted && ready ? hasWebGL() : false),
+    [mounted, ready],
+  );
 
   useEffect(() => {
     let idleId = 0;
@@ -44,17 +54,15 @@ export default function SceneCanvas() {
     };
   }, []);
 
-  const enabled = useMemo(
-    () => mounted && ready && !prefersReducedMotion() && hasWebGL(),
-    [mounted, ready],
-  );
+  const enabled =
+    mounted && ready && quality !== null && quality.tier !== "static" && webgl;
 
   return (
     <>
       <div aria-hidden="true" className="scene-fallback fixed inset-0 z-0" />
-      {enabled ? (
+      {enabled && quality ? (
         <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0">
-          <WeaveScene />
+          <WeaveScene quality={quality} />
         </div>
       ) : null}
     </>

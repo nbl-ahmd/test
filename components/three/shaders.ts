@@ -75,13 +75,13 @@ uniform float uTurbulence;
 uniform float uSize;
 uniform float uMaxSize;
 uniform float uPixelRatio;
+uniform float uViewportH;
 uniform float uAccent;
 uniform float uVelocity;
 uniform vec2 uMouse;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
 
-attribute vec3 aPos0;
 attribute vec3 aPos1;
 attribute vec3 aPos2;
 attribute vec3 aPos3;
@@ -102,7 +102,8 @@ vec3 shapePosition() {
   vec3 a;
   vec3 b;
   if (idx < 0.5) {
-    a = aPos0; b = aPos1;
+    // position doubles as the first shape (saves a vertex attribute).
+    a = position; b = aPos1;
   } else if (idx < 1.5) {
     a = aPos1; b = aPos2;
   } else if (idx < 2.5) {
@@ -152,13 +153,15 @@ void main() {
 
   gl_Position = projectionMatrix * mvPosition;
 
+  // Device-independent point size: scale with the canvas CSS height, then
+  // multiply by DPR and divide by depth, clamped so points are never
+  // microscopic on 1x screens nor huge on 3x phones.
+  float hScale = clamp(uViewportH / 900.0, 0.6, 1.6);
   float sizeMul = mix(1.0, 0.75, edgeMask);
   sizeMul = mix(sizeMul, 0.55, gridMask);
-  float size = uSize * aScale * sizeMul * (1.0 + speed * 0.2);
-  gl_PointSize = min(
-    size * uPixelRatio / max(-mvPosition.z, 0.1),
-    uMaxSize * uPixelRatio
-  );
+  float size = uSize * aScale * sizeMul * (1.0 + speed * 0.2) * hScale;
+  float px = size * uPixelRatio / max(-mvPosition.z, 0.1);
+  gl_PointSize = clamp(px, 0.75 * uPixelRatio, uMaxSize * uPixelRatio);
 
   float accent = smoothstep(1.0 - uAccent, 1.0, aRand);
   vec3 color = mix(uColorA, uColorB, accent);

@@ -1,25 +1,48 @@
+import { prefersReducedMotion } from "@/lib/motion";
+
+export type SceneTier = "high" | "mid" | "low" | "static";
+
 export type SceneQuality = {
+  tier: SceneTier;
   count: number;
   dpr: [number, number];
-  lowEnd: boolean;
 };
 
-const DESKTOP_COUNT = 14000;
-const MOBILE_COUNT = 6000;
+const COUNTS: Record<Exclude<SceneTier, "static">, number> = {
+  high: 14000,
+  mid: 8000,
+  low: 4000,
+};
 
+const DPR: Record<Exclude<SceneTier, "static">, [number, number]> = {
+  high: [1, 1.75],
+  mid: [1, 1.5],
+  low: [1, 1],
+};
+
+function tierQuality(tier: Exclude<SceneTier, "static">): SceneQuality {
+  return { tier, count: COUNTS[tier], dpr: DPR[tier] };
+}
+
+/**
+ * Computed once on the client. `static` means: reduced motion, so the scene is
+ * replaced by the CSS gradient fallback.
+ */
 export function getSceneQuality(): SceneQuality {
-  if (typeof window === "undefined") {
-    return { count: DESKTOP_COUNT, dpr: [1, 1.75], lowEnd: false };
-  }
+  if (typeof window === "undefined") return tierQuality("high");
+  if (prefersReducedMotion()) return { tier: "static", count: 0, dpr: [1, 1] };
 
-  const cores = navigator.hardwareConcurrency ?? 8;
-  const lowEnd = window.innerWidth < 768 || cores <= 4;
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  const cores = nav.hardwareConcurrency ?? 8;
+  const memory = nav.deviceMemory ?? 8;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
-  return {
-    count: lowEnd ? MOBILE_COUNT : DESKTOP_COUNT,
-    dpr: lowEnd ? [1, 1] : [1, 1.75],
-    lowEnd,
-  };
+  const lowEnd =
+    window.innerWidth < 768 || memory <= 4 || cores <= 4;
+  if (lowEnd) return tierQuality("low");
+
+  if (fine && cores >= 8) return tierQuality("high");
+  return tierQuality("mid");
 }
 
 export function hasWebGL(): boolean {
