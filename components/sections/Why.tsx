@@ -95,7 +95,7 @@ export default function Why() {
         className="bg-[#ecebe6] text-[#0a0a0b]"
         style={{ willChange: "clip-path, transform" }}
       >
-        <Container className="py-28 md:py-40">
+        <Container className="py-20 md:py-40">
           <p className="label text-[#0a0a0b]/70">{why.label}</p>
           <LineReveal
             as="h2"
@@ -111,7 +111,7 @@ export default function Why() {
             {why.rows.map((row) => (
               <div
                 key={row.label}
-                className="grid gap-3 border-b border-[#0a0a0b]/15 py-8 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)_minmax(0,1.1fr)] md:items-baseline md:gap-10"
+                className="grid gap-2 border-b border-[#0a0a0b]/15 py-6 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)_minmax(0,1.1fr)] lg:items-baseline lg:gap-10 lg:py-8"
               >
                 <span className="label text-[#0a0a0b]/70">{row.label}</span>
                 <span className="relative inline-block w-fit text-[clamp(1.15rem,2.4vw,1.9rem)] leading-[1.25] text-[#0a0a0b]/65">

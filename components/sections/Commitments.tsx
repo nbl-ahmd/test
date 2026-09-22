@@ -3,10 +3,10 @@ import RollingCounter from "@/components/ui/RollingCounter";
 import Container from "@/components/layout/Container";
 
 const LAYOUT = [
-  "col-span-12 md:col-span-6 md:col-start-1",
-  "col-span-12 md:col-span-4 md:col-start-9 md:mt-24",
-  "col-span-12 md:col-span-5 md:col-start-2 md:mt-4",
-  "col-span-12 md:col-span-4 md:col-start-8 md:mt-32",
+  "lg:col-span-6 lg:col-start-1",
+  "mt-0 sm:mt-10 lg:col-span-4 lg:col-start-9 lg:mt-24",
+  "lg:col-span-5 lg:col-start-2 lg:mt-4",
+  "mt-0 sm:mt-10 lg:col-span-4 lg:col-start-8 lg:mt-32",
 ];
 
 const SIZES = [
@@ -30,7 +30,7 @@ export default function Commitments() {
           {commitments.label}
         </h2>
 
-        <div className="grid-12 mt-16 gap-y-14 md:gap-y-0">
+        <div className="mt-16 grid grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-16 lg:grid-cols-12 lg:gap-x-0 lg:gap-y-0">
           {commitments.items.map((item, index) => (
             <div key={item.label} className={LAYOUT[index]}>
               <p

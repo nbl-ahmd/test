@@ -98,7 +98,7 @@ export default function Hero() {
       ref={sectionRef}
       id="hero"
       aria-labelledby="hero-title"
-      className="relative z-10 flex min-h-svh flex-col pt-24 pb-8 md:pt-28 md:pb-10"
+      className="relative z-10 flex min-h-svh flex-col pt-24 pb-8 [@media(max-height:500px)]:min-h-0 md:pt-28 md:pb-10"
     >
       <Container className="flex flex-1 flex-col">
         <p data-intro-hide data-hero-fade className="label text-muted">
@@ -111,7 +111,7 @@ export default function Hero() {
               ref={titleRef}
               id="hero-title"
               data-intro-hide
-              className="display max-w-[14ch] text-balance"
+              className="display max-w-[14ch] text-balance [@media(max-height:500px)]:text-[clamp(2rem,9vh,3rem)]"
             >
               {site.hero.titleBefore}{" "}
               <em className="accent-italic">{site.hero.titleEmphasis}</em>{" "}
@@ -128,14 +128,14 @@ export default function Hero() {
             <div
               data-intro-hide
               data-hero-fade
-              className="mt-10 flex flex-wrap items-center gap-3"
+              className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
             >
               <Magnetic>
                 <a
                   href={site.hero.primaryCta.href}
                   data-cursor="open"
                   onClick={(event) => handleNav(event, "contact")}
-                  className="label inline-flex min-h-11 items-center rounded-full bg-accent px-5 py-3 whitespace-nowrap text-bg transition-colors hover:bg-fg"
+                  className="label inline-flex min-h-11 w-full items-center justify-center rounded-full bg-accent px-5 py-3 whitespace-nowrap text-bg transition-colors hover:bg-fg sm:w-auto"
                 >
                   {site.hero.primaryCta.label}
                 </a>
@@ -145,7 +145,7 @@ export default function Hero() {
                   href={site.hero.secondaryCta.href}
                   data-cursor="view"
                   onClick={(event) => handleNav(event, "work")}
-                  className="label inline-flex min-h-11 items-center rounded-full border border-line px-5 py-3 transition-colors hover:border-fg"
+                  className="label inline-flex min-h-11 w-full items-center justify-center rounded-full border border-line px-5 py-3 transition-colors hover:border-fg sm:w-auto"
                 >
                   {site.hero.secondaryCta.label}
                 </a>
@@ -172,7 +172,9 @@ export default function Hero() {
             <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
             {site.status}
           </span>
-          <LocalTime />
+          <span className="hidden sm:inline-block">
+            <LocalTime />
+          </span>
         </div>
       </Container>
     </section>

@@ -129,9 +129,17 @@ export default function Work() {
                             <span className="block max-w-[52ch] text-[17px] leading-[1.6] text-fg/90">
                               {project.blurb}
                             </span>
-                            <span className="label mt-3 block text-muted">
+                            <span className="label mt-3 block text-muted [overflow-wrap:anywhere]">
                               {project.highlights.join(" / ")} —{" "}
                               {project.stack.join(" / ")}
+                            </span>
+                            {/* Touch/small screens: the browser mock renders
+                                inside the expanded row instead of following a
+                                cursor. */}
+                            <span className="mt-5 hidden touch:block motion-reduce:block">
+                              <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-lg border border-line">
+                                <ProjectMock project={project} />
+                              </span>
                             </span>
                           </span>
                         </span>

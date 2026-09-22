@@ -17,9 +17,11 @@ export default function Marquee({ items }: { items: string[] }) {
       const track = el.querySelector<HTMLElement>("[data-track]");
       if (!track) return;
 
+      // Slower travel on phones so the names stay readable.
+      const duration = window.innerWidth < 768 ? 46 : 28;
       const tween = gsap.to(track, {
         xPercent: -50,
-        duration: 28,
+        duration,
         ease: "none",
         repeat: -1,
       });

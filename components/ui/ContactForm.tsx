@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { contactSchema, fieldErrors } from "@/lib/contact-schema";
 import { site } from "@/content/site";
 import Magnetic from "@/components/ui/Magnetic";
@@ -16,6 +16,15 @@ export default function ContactForm() {
   const [formError, setFormError] = useState("");
   const [projectType, setProjectType] = useState("");
   const [budget, setBudget] = useState("");
+  const statusRef = useRef<HTMLElement | null>(null);
+
+  // Bring the success/error message into view (important once the on-screen
+  // keyboard has shifted the layout).
+  useEffect(() => {
+    if (status === "success" || status === "error") {
+      statusRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [status]);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,7 +79,13 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div role="status" className="rounded-md border border-line p-8">
+      <div
+        ref={(el) => {
+          statusRef.current = el;
+        }}
+        role="status"
+        className="rounded-md border border-line p-8"
+      >
         <h3 className="text-2xl font-medium tracking-[-0.02em]">
           {site.contact.successTitle}
         </h3>
@@ -83,6 +98,9 @@ export default function ContactForm() {
     <form noValidate onSubmit={onSubmit} className="space-y-8">
       {formError ? (
         <p
+          ref={(el) => {
+            statusRef.current = el;
+          }}
           role="alert"
           className="rounded-md border border-accent/40 px-4 py-3 text-sm text-accent"
         >

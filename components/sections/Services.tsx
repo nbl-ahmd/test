@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { site } from "@/content/site";
-import { isMobileViewport, prefersReducedMotion } from "@/lib/motion";
+import { prefersReducedMotion } from "@/lib/motion";
 import { DESKTOP } from "@/lib/media";
 import { setSceneTarget } from "@/lib/scene-store";
 import { SERVICE_STEP_ROTATION } from "@/lib/scene-keyframes";
@@ -22,6 +22,10 @@ export default function Services() {
     if (index === activeRef.current) return;
     activeRef.current = index;
     setActive(index);
+    // Rotate the cube to the opened service (desktop scroll also drives this).
+    if (index >= 0) {
+      setSceneTarget({ rotY: SERVICE_STEP_ROTATION[index] });
+    }
   };
 
   useGSAP(
@@ -107,11 +111,12 @@ export default function Services() {
                   <button
                     type="button"
                     aria-expanded={isActive}
-                    onClick={() =>
-                      activate(
-                        isActive && isMobileViewport() ? -1 : index,
-                      )
-                    }
+                    onClick={() => {
+                      const desktop = window.matchMedia(DESKTOP).matches;
+                      // Desktop is scroll-driven; below lg it is a tap
+                      // accordion (one open at a time, tap again to close).
+                      activate(desktop ? index : isActive ? -1 : index);
+                    }}
                     className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-4 py-4 text-left md:gap-x-8 md:py-6"
                   >
                     <span className="label text-muted">({step.index})</span>
@@ -122,7 +127,7 @@ export default function Services() {
                     >
                       {step.title}
                     </span>
-                    <span className="label text-muted md:text-right">
+                    <span className="label hidden text-muted desktop:inline md:text-right">
                       {step.timeline}
                     </span>
                   </button>
@@ -142,6 +147,9 @@ export default function Services() {
                         <p className="mt-4 text-muted">
                           <span className="text-fg">Best for:</span>{" "}
                           {step.bestFor}
+                        </p>
+                        <p className="label mt-4 text-muted desktop:hidden">
+                          Timeline: {step.timeline}
                         </p>
                       </div>
                     </div>

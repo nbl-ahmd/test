@@ -82,7 +82,7 @@ export default function Footer() {
           </nav>
         </div>
 
-        <p className="mt-20 text-[clamp(2.5rem,13vw,10rem)] leading-[0.8] font-medium tracking-[-0.05em]">
+        <p className="mt-20 max-w-full text-[clamp(2rem,12vw,10rem)] leading-[0.8] font-medium tracking-[-0.05em]">
           {site.wordmark}
           <span className="align-super text-[0.32em]">{site.mark}</span>
         </p>

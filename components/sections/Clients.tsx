@@ -63,7 +63,7 @@ export default function Clients() {
         </p>
         <p
           ref={statementRef}
-          className="mt-10 max-w-[22ch] text-[clamp(2.2rem,7vw,7.5rem)] leading-[1.02] font-medium tracking-[-0.045em] text-balance"
+          className="mt-10 max-w-[22ch] text-[clamp(2.2rem,7vw,7.5rem)] leading-[1.02] font-medium tracking-[-0.045em] text-balance max-lg:text-[clamp(1.9rem,6.5vw,4rem)]"
         >
           {clients.statement.map((part, index) =>
             part.accent ? (

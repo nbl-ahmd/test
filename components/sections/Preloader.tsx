@@ -52,6 +52,9 @@ export default function Preloader() {
         },
       });
 
+      // Phones get a snappier intro (~1.3s) so input is never blocked long.
+      if (window.innerWidth < 768) timeline.timeScale(1.4);
+
       timeline
         .from(
           "[data-mark]",

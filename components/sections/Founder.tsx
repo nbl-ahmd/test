@@ -21,7 +21,7 @@ export default function Founder() {
       aria-labelledby="founder-title"
       className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <Container className="grid gap-14 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)] lg:items-center">
+      <Container className="grid gap-12 md:grid-cols-[minmax(0,1.35fr)_minmax(0,0.65fr)] md:items-center">
         <div>
           <p className="label text-muted">( who&apos;s behind domweave )</p>
           <blockquote
@@ -47,7 +47,7 @@ export default function Founder() {
           </div>
         </div>
 
-        <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-line bg-fg/[0.04] lg:justify-self-end">
+        <div className="relative order-first mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-line bg-fg/[0.04] md:order-none md:justify-self-end">
           {founder.photo ? (
             <Image
               src={founder.photo}
