@@ -18,6 +18,7 @@ export const SECTION_KEYFRAMES: Record<string, SectionKeyframe> = {
   work: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 0.4, turbulence: 0 },
   why: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 0.7, turbulence: 0 },
   commitments: { shape: 1, dim: 0.2, stage: "right", x: 0, camZ: 7.4, rotY: 1, turbulence: 0 },
+  founder: { shape: 1, dim: 0.18, stage: "right", x: 0, camZ: 7.4, rotY: 1.15, turbulence: 0 },
   stack: { shape: 1, dim: 0.15, stage: "right", x: 0, camZ: 7.4, rotY: 1.3, turbulence: 0 },
   testimonials: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 1.6, turbulence: 0 },
   faq: { shape: 1, dim: 0.18, stage: "right", x: 0, camZ: 7.4, rotY: 1.9, turbulence: 0 },

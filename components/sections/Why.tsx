@@ -1,52 +1,130 @@
+"use client";
+
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { site } from "@/content/site";
-import Reveal from "@/components/ui/Reveal";
-import Tick from "@/components/ui/Tick";
+import { prefersReducedMotion } from "@/lib/motion";
 import Container from "@/components/layout/Container";
 
 export default function Why() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const { why } = site;
 
+  useGSAP(
+    () => {
+      const panel = panelRef.current;
+      if (!panel) return;
+
+      // Flip the header to dark while the paper sheet is under it.
+      const themeTrigger = ScrollTrigger.create({
+        trigger: panel,
+        start: "top 72px",
+        end: "bottom 72px",
+        onToggle: (self) => {
+          if (self.isActive) {
+            document.documentElement.dataset.paper = "true";
+          } else {
+            delete document.documentElement.dataset.paper;
+          }
+        },
+      });
+
+      if (prefersReducedMotion()) {
+        return () => {
+          themeTrigger.kill();
+          delete document.documentElement.dataset.paper;
+        };
+      }
+
+      const enter = gsap.fromTo(
+        panel,
+        {
+          clipPath: "inset(6% 4% 6% 4% round 28px)",
+          scale: 0.98,
+        },
+        {
+          clipPath: "inset(0% 0% 0% 0% round 0px)",
+          scale: 1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: panel,
+            start: "top 90%",
+            end: "top 40%",
+            scrub: true,
+          },
+        },
+      );
+
+      const strikes = gsap.fromTo(
+        "[data-strike]",
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          transformOrigin: "left center",
+          ease: "none",
+          stagger: 0.35,
+          scrollTrigger: {
+            trigger: panel,
+            start: "top 72%",
+            end: "bottom 68%",
+            scrub: true,
+          },
+        },
+      );
+
+      return () => {
+        themeTrigger.kill();
+        delete document.documentElement.dataset.paper;
+        enter.scrollTrigger?.kill();
+        enter.kill();
+        strikes.scrollTrigger?.kill();
+        strikes.kill();
+      };
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <section
-      id="why"
-      aria-labelledby="why-title"
-      className="relative z-10 border-t border-line py-24 md:py-32"
-    >
-      <Container>
-        <p className="label text-muted">{why.label}</p>
-        <h2
-          id="why-title"
-          className="mt-6 text-[clamp(1.9rem,4vw,3.2rem)] leading-[1.1] font-medium tracking-[-0.03em]"
-        >
-          {why.heading}
-        </h2>
-
-        <Reveal className="mt-14" stagger={0.06}>
-          <div
-            data-reveal
-            className="hidden border-b border-line pb-4 md:grid md:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-6"
+    <section ref={sectionRef} id="why" className="relative z-10 bg-bg">
+      <div
+        ref={panelRef}
+        className="bg-[#ecebe6] text-[#0a0a0b]"
+        style={{ willChange: "clip-path, transform" }}
+      >
+        <Container className="py-28 md:py-40">
+          <p className="label text-[#0a0a0b]/60">{why.label}</p>
+          <h2
+            id="why-title"
+            className="mt-6 max-w-[18ch] text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.08] font-medium tracking-[-0.03em] text-balance"
           >
-            <span className="label text-muted" />
-            <span className="label text-muted">{why.columns.typical}</span>
-            <span className="label text-accent">{why.columns.domweave}</span>
-          </div>
+            {why.heading}
+          </h2>
 
-          {why.rows.map((row) => (
-            <div
-              key={row.label}
-              data-reveal
-              className="grid gap-2 border-b border-line py-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-6"
-            >
-              <span className="label pt-1 text-muted">{row.label}</span>
-              <span className="text-pretty text-muted">{row.typical}</span>
-              <span className="flex items-start gap-3 text-pretty text-fg">
-                <Tick />
-                {row.domweave}
-              </span>
-            </div>
-          ))}
-        </Reveal>
-      </Container>
+          <div className="mt-16 border-t border-[#0a0a0b]/15">
+            {why.rows.map((row) => (
+              <div
+                key={row.label}
+                className="grid gap-3 border-b border-[#0a0a0b]/15 py-8 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)_minmax(0,1.1fr)] md:items-baseline md:gap-10"
+              >
+                <span className="label text-[#0a0a0b]/55">{row.label}</span>
+                <span className="relative inline-block w-fit text-[clamp(1.15rem,2.4vw,1.9rem)] leading-[1.25] text-[#0a0a0b]/50">
+                  {row.typical}
+                  <span
+                    data-strike
+                    aria-hidden="true"
+                    className="absolute top-1/2 left-0 h-px w-full origin-left scale-x-0 bg-[#0a0a0b]"
+                  />
+                </span>
+                <span className="text-[clamp(1.15rem,2.4vw,1.9rem)] leading-[1.25] font-semibold tracking-[-0.01em] text-[#0a0a0b]">
+                  {row.domweave}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </div>
     </section>
   );
 }

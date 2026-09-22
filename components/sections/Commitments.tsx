@@ -1,7 +1,20 @@
 import { site } from "@/content/site";
-import Reveal from "@/components/ui/Reveal";
 import RollingCounter from "@/components/ui/RollingCounter";
 import Container from "@/components/layout/Container";
+
+const LAYOUT = [
+  "col-span-12 md:col-span-6 md:col-start-1",
+  "col-span-12 md:col-span-4 md:col-start-9 md:mt-24",
+  "col-span-12 md:col-span-5 md:col-start-2 md:mt-4",
+  "col-span-12 md:col-span-4 md:col-start-8 md:mt-32",
+];
+
+const SIZES = [
+  "clamp(3.5rem,12vw,9rem)",
+  "clamp(2.5rem,8vw,6rem)",
+  "clamp(3rem,10vw,7.5rem)",
+  "clamp(2rem,6.5vw,5rem)",
+];
 
 export default function Commitments() {
   const { commitments } = site;
@@ -17,18 +30,21 @@ export default function Commitments() {
           {commitments.label}
         </h2>
 
-        <Reveal className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {commitments.items.map((item) => (
-            <div key={item.label} data-reveal>
-              <p className="text-[clamp(3rem,8vw,6rem)] leading-none font-medium tracking-[-0.04em]">
+        <div className="grid-12 mt-16 gap-y-14 md:gap-y-0">
+          {commitments.items.map((item, index) => (
+            <div key={item.label} className={LAYOUT[index]}>
+              <p
+                className="leading-none font-medium tracking-[-0.045em]"
+                style={{ fontSize: SIZES[index] }}
+              >
                 <RollingCounter value={item.value} />
               </p>
-              <p className="mt-4 text-pretty text-muted">{item.label}</p>
+              <p className="label mt-3 text-muted">{item.label}</p>
             </div>
           ))}
-        </Reveal>
+        </div>
 
-        <p className="mt-14 text-lg text-fg/85 md:text-xl">
+        <p className="mt-24 max-w-[40ch] text-[clamp(1.1rem,2vw,1.5rem)] leading-[1.4] text-fg/90">
           {commitments.line}
         </p>
       </Container>

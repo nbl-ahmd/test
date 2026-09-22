@@ -69,7 +69,7 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className="fixed inset-x-0 top-0 z-50 will-change-transform"
+        className="site-header fixed inset-x-0 top-0 z-50 will-change-transform"
       >
         <Container className="flex items-center justify-between py-4 md:py-5">
           <a
@@ -98,6 +98,7 @@ export default function Header() {
               <a
                 href={site.cta.href}
                 data-cursor="open"
+                data-header-cta
                 onClick={(event) => handleNav(event, "contact")}
                 className="label inline-flex items-center rounded-full border border-line px-4 py-2.5 whitespace-nowrap transition-colors hover:border-fg hover:bg-fg hover:text-bg md:px-5"
               >

@@ -207,10 +207,30 @@
   }
 }
 
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .preview-only-fine {
     display: block;
   }
+}
+
+/* The light "paper" section flips the fixed header to dark ink so it stays
+   legible while the sheet scrolls beneath it. */
+html[data-paper="true"] .site-header {
+  color: #0a0a0b;
+}
+
+html[data-paper="true"] .site-header button {
+  color: #0a0a0b;
+}
+
+html[data-paper="true"] .site-header [data-header-cta] {
+  border-color: rgba(10, 10, 11, 0.28);
+}
+
+html[data-paper="true"] .site-header [data-header-cta]:hover {
+  border-color: #0a0a0b;
+  background-color: #0a0a0b;
+  color: #ecebe6;
 }
 
 /* Preloader: the inline boot script hides it for returning / reduced-motion

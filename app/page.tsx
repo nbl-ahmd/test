@@ -6,6 +6,7 @@ import Process from "@/components/sections/Process";
 import Work from "@/components/sections/Work";
 import Why from "@/components/sections/Why";
 import Commitments from "@/components/sections/Commitments";
+import Founder from "@/components/sections/Founder";
 import Stack from "@/components/sections/Stack";
 import Testimonials from "@/components/sections/Testimonials";
 import Faq from "@/components/sections/Faq";
@@ -22,6 +23,7 @@ export default function Home() {
       <Work />
       <Why />
       <Commitments />
+      <Founder />
       <Stack />
       <Testimonials />
       <Faq />

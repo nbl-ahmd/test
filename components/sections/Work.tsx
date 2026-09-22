@@ -7,6 +7,7 @@ import { site } from "@/content/site";
 import { isFinePointer, prefersReducedMotion } from "@/lib/motion";
 import { scrollToId } from "@/lib/scroll";
 import Container from "@/components/layout/Container";
+import ProjectMock from "@/components/sections/ProjectMock";
 
 export default function Work() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -24,19 +25,20 @@ export default function Work() {
       const preview = previewRef.current;
       if (!preview || !isFinePointer() || prefersReducedMotion()) return;
 
-      gsap.set(preview, { xPercent: -50, yPercent: -50 });
-      const xTo = gsap.quickTo(preview, "x", {
-        duration: 0.5,
-        ease: "power3.out",
-      });
+      gsap.set(preview, { yPercent: -50 });
       const yTo = gsap.quickTo(preview, "y", {
-        duration: 0.5,
+        duration: 0.6,
         ease: "power3.out",
       });
 
       const onPointerMove = (event: PointerEvent) => {
-        xTo(event.clientX);
-        yTo(event.clientY);
+        yTo(
+          gsap.utils.clamp(
+            150,
+            window.innerHeight - 150,
+            event.clientY,
+          ),
+        );
       };
 
       window.addEventListener("pointermove", onPointerMove, { passive: true });
@@ -70,74 +72,96 @@ export default function Work() {
           <em className="accent-italic">{site.work.headingEmphasis}</em>
         </h2>
 
-        <ul className="mt-14 border-t border-line">
-          {projects.map((project, index) => (
-            <li
-              key={project.name}
-              className="border-b border-line"
-              onPointerEnter={() => {
-                if (canPreviewRef.current) setActive(index);
-              }}
-              onPointerLeave={() => setActive(null)}
-            >
-              <div className="grid items-baseline gap-4 py-8 transition-colors hover:bg-fg/[0.03] md:grid-cols-[auto_minmax(0,1fr)_auto] md:gap-8">
-                <span className="label text-muted">{project.index}</span>
+        <div className="grid-12 mt-14">
+          <div className="col-span-12 lg:col-span-7">
+            <ul className="border-t border-line">
+              {projects.map((project, index) => {
+                const isActive = active === index;
+                return (
+                  <li
+                    key={project.name}
+                    className="border-b border-line"
+                    onPointerEnter={() => {
+                      if (canPreviewRef.current) setActive(index);
+                    }}
+                    onPointerLeave={() => setActive(null)}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={isActive}
+                      onClick={() => setActive(isActive ? null : index)}
+                      onFocus={() => setActive(index)}
+                      onBlur={() => setActive(null)}
+                      className="block w-full py-6 text-left md:py-8"
+                    >
+                      <span className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-baseline gap-x-4 md:gap-x-8">
+                        <span className="label text-muted">
+                          {project.index}
+                        </span>
+                        <span className="flex flex-wrap items-center gap-3">
+                          <span className="text-[clamp(1.6rem,3.6vw,2.8rem)] leading-[1.05] font-medium tracking-[-0.03em]">
+                            {project.name}
+                          </span>
+                          <span className="label rounded-full border border-line px-2 py-1 text-muted">
+                            {site.work.sampleTag}
+                          </span>
+                        </span>
+                        <span className="label text-muted md:text-right">
+                          {project.type} · {project.year}
+                        </span>
+                      </span>
 
-                <div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="text-[clamp(1.5rem,3.4vw,2.6rem)] leading-[1.05] font-medium tracking-[-0.03em]">
-                      {project.name}
-                    </h3>
-                    <span className="label rounded-full border border-line px-2 py-1 text-muted">
-                      {site.work.sampleTag}
-                    </span>
-                  </div>
-                  <p className="mt-2 max-w-xl text-pretty text-muted">
-                    {project.blurb}
-                  </p>
-                  <p className="label mt-4 text-muted">
-                    {project.highlights.join(" · ")}
-                  </p>
-                  <p className="label mt-2 text-subtle">
-                    {project.stack.join(" · ")}
-                  </p>
-                </div>
+                      <span
+                        className="grid transition-[grid-template-rows] duration-500 ease-out motion-reduce:transition-none"
+                        style={{
+                          gridTemplateRows: isActive ? "1fr" : "0fr",
+                        }}
+                      >
+                        <span className="overflow-hidden">
+                          <span className="block pt-4 md:pt-5">
+                            <span className="block max-w-[52ch] text-[17px] leading-[1.6] text-fg/90">
+                              {project.blurb}
+                            </span>
+                            <span className="label mt-3 block text-muted">
+                              {project.highlights.join(" / ")} —{" "}
+                              {project.stack.join(" / ")}
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
 
-                <span className="label text-muted md:text-right">
-                  {project.type} · {project.year}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-12">
-          <a
-            href="#contact"
-            data-cursor="open"
-            onClick={(event) => handleClosing(event, "contact")}
-            className="text-xl font-medium tracking-[-0.02em] transition-colors hover:text-accent md:text-2xl"
-          >
-            {site.work.closing} →
-          </a>
+            <div className="mt-12">
+              <a
+                href="#contact"
+                data-cursor="open"
+                onClick={(event) => handleClosing(event, "contact")}
+                className="text-xl font-medium tracking-[-0.02em] transition-colors hover:text-accent md:text-2xl"
+              >
+                {site.work.closing} →
+              </a>
+            </div>
+          </div>
         </div>
       </Container>
 
       <div
         ref={previewRef}
         aria-hidden="true"
-        className="preview-only-fine pointer-events-none fixed top-0 left-0 z-[75] h-56 w-80 overflow-hidden rounded-md border border-line"
+        className="preview-only-fine pointer-events-none fixed top-0 left-[62vw] z-[75] h-56 w-[30vw] overflow-hidden rounded-lg border border-line"
         style={{
-          background: active !== null ? projects[active].gradient : "transparent",
           opacity: active !== null ? 1 : 0,
           clipPath:
             active !== null ? "inset(0% 0 0 0)" : "inset(0 0 100% 0)",
-          transition: "clip-path 0.5s ease, opacity 0.3s ease",
+          transition:
+            "clip-path 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease",
         }}
       >
-        <span className="label absolute bottom-3 left-3 text-fg">
-          {active !== null ? projects[active].name : ""}
-        </span>
+        {active !== null ? <ProjectMock project={projects[active]} /> : null}
       </div>
     </section>
   );

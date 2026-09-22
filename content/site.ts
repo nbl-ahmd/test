@@ -47,6 +47,8 @@ export type ProcessStep = {
   outcome: string;
 };
 
+export type ProjectPreview = "chart" | "kanban" | "grid" | "map";
+
 export type Project = {
   index: string;
   name: string;
@@ -56,6 +58,17 @@ export type Project = {
   stack: string[];
   highlights: string[];
   gradient: string;
+  /** Which CSS/SVG browser mock to draw on hover. */
+  preview: ProjectPreview;
+};
+
+export type FounderNote = {
+  name: string;
+  role: string;
+  /** Optional portrait path; falls back to a monogram when omitted. */
+  photo?: string;
+  note: string;
+  booking: { label: string; href: string };
 };
 
 export type WhyRow = {
@@ -180,6 +193,8 @@ export type SiteConfig = {
     items: Commitment[];
     line: string;
   };
+  /** Renders the founder-note section only when this is defined. */
+  founder: FounderNote | null;
   stack: {
     label: string;
     marquee: string[];
@@ -439,6 +454,7 @@ export const site: SiteConfig = {
         ],
         gradient:
           "linear-gradient(135deg, #10131f 0%, #2b3a67 55%, #c8ff2e 135%)",
+        preview: "chart",
       },
       {
         index: "02",
@@ -450,6 +466,7 @@ export const site: SiteConfig = {
         highlights: ["Pipeline board", "Email & calendar sync", "Automated follow-ups"],
         gradient:
           "linear-gradient(135deg, #17102b 0%, #4a2a6b 60%, #a9a8a2 140%)",
+        preview: "kanban",
       },
       {
         index: "03",
@@ -465,6 +482,7 @@ export const site: SiteConfig = {
         ],
         gradient:
           "linear-gradient(160deg, #241a12 0%, #6b4a2a 55%, #ecebe6 145%)",
+        preview: "grid",
       },
       {
         index: "04",
@@ -480,6 +498,7 @@ export const site: SiteConfig = {
         ],
         gradient:
           "linear-gradient(135deg, #0b1c17 0%, #1f5a4a 60%, #c8ff2e 140%)",
+        preview: "map",
       },
     ],
   },
@@ -530,6 +549,16 @@ export const site: SiteConfig = {
     ],
     line: "Fixed scope. Fixed price. Weekly demos. NDA on request.",
   },
+  // TODO: fill in — a real face and note builds more trust than anything else on the page.
+  // When defined, this renders a founder-note section between Commitments and the FAQ.
+  // founder: {
+  //   name: "Nabeel Ahmed",
+  //   role: "Founder & lead engineer",
+  //   photo: "/founder.jpg", // optional — falls back to a monogram when omitted
+  //   note: "I started Domweave after years of watching good ideas stall in handovers. You'll work directly with me from first call to launch, with no account managers in between. If something isn't working, I'd rather hear it early than ship it late.",
+  //   booking: { label: "Book a 30-min call", href: "#contact" },
+  // },
+  founder: null,
   stack: {
     label: "( stack )",
     marquee: [
