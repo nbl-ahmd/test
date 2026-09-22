@@ -237,7 +237,7 @@ export function createShapeAttributes(count: number): ShapeAttributes {
   const cubeEdgeCount = Math.floor(count * CUBE_EDGE_RATIO);
   for (let i = 0; i < count; i += 1) {
     rand[i] = rnd();
-    scale[i] = 0.5 + rnd() * 0.85;
+    scale[i] = 0.55 + rnd() * 1.0;
     edge[i] = i < cubeEdgeCount ? 1 : 0;
   }
 

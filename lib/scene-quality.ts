@@ -9,8 +9,8 @@ export type SceneQuality = {
 };
 
 const COUNTS: Record<Exclude<SceneTier, "static">, number> = {
-  high: 14000,
-  mid: 8000,
+  high: 18000,
+  mid: 10000,
   low: 4000,
 };
 

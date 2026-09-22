@@ -168,10 +168,10 @@ void main() {
   color = mix(color, uColorB, edgeMask * 0.35);
   vColor = color;
 
-  float twinkle = 0.8 + 0.2 * sin(uTime * 1.6 + aRand * 42.0);
-  float alphaMul = mix(1.0, 0.6, edgeMask);
-  alphaMul = mix(alphaMul, 0.25, gridMask);
-  vAlpha = uDim * twinkle * (0.12 + 0.2 * aScale) * alphaMul;
+  float twinkle = 0.78 + 0.22 * sin(uTime * 1.6 + aRand * 42.0);
+  float alphaMul = mix(1.0, 0.62, edgeMask);
+  alphaMul = mix(alphaMul, 0.28, gridMask);
+  vAlpha = uDim * twinkle * (0.2 + 0.3 * aScale) * alphaMul;
 }
 `;
 
