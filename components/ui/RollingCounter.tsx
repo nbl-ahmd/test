@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 export default function RollingCounter({ value }: { value: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -23,8 +24,8 @@ export default function RollingCounter({ value }: { value: string }) {
         {
           yPercent: (_index, target) =>
             -Number((target as HTMLElement).dataset.digit ?? 0) * 10,
-          duration: 1.3,
-          ease: "power3.out",
+          duration: DUR.slow,
+          ease: EASE.out,
           stagger: 0.09,
           scrollTrigger: { trigger: el, start: "top 85%" },
         },

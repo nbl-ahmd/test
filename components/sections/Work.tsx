@@ -8,6 +8,8 @@ import { isFinePointer, prefersReducedMotion } from "@/lib/motion";
 import { scrollToId } from "@/lib/scroll";
 import Container from "@/components/layout/Container";
 import ProjectMock from "@/components/sections/ProjectMock";
+import LineReveal from "@/components/ui/LineReveal";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 export default function Work() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -27,8 +29,8 @@ export default function Work() {
 
       gsap.set(preview, { yPercent: -50 });
       const yTo = gsap.quickTo(preview, "y", {
-        duration: 0.6,
-        ease: "power3.out",
+        duration: DUR.base,
+        ease: EASE.out,
       });
 
       const onPointerMove = (event: PointerEvent) => {
@@ -64,13 +66,17 @@ export default function Work() {
     >
       <Container>
         <p className="label text-muted">{site.work.label}</p>
-        <h2
+        <LineReveal
+          as="h2"
           id="work-title"
           className="mt-6 text-[clamp(2rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+          stagger={0.12}
+          yPercent={100}
+          start="top 82%"
         >
           {site.work.heading}{" "}
           <em className="accent-italic">{site.work.headingEmphasis}</em>
-        </h2>
+        </LineReveal>
 
         <div className="grid-12 mt-14">
           <div className="col-span-12 lg:col-span-7">
@@ -89,6 +95,7 @@ export default function Work() {
                     <button
                       type="button"
                       aria-expanded={isActive}
+                      data-cursor="view"
                       onClick={() => setActive(isActive ? null : index)}
                       onFocus={() => setActive(index)}
                       onBlur={() => setActive(null)}

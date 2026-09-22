@@ -28,6 +28,12 @@
     --gutter: clamp(20px, 4vw, 64px);
     /* Approximate rendered header height (wordmark + vertical padding). */
     --header-h: 4.5rem;
+    /* Motion tokens — mirrors lib/motion-tokens.ts. */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-inout: cubic-bezier(0.87, 0, 0.13, 1);
+    --dur-fast: 0.4s;
+    --dur-base: 0.8s;
+    --dur-slow: 1.2s;
   }
 
   *,
@@ -114,6 +120,31 @@
     -webkit-text-stroke: 1px var(--color-muted);
   }
 
+  /* Links wipe a hairline underline in from the left on hover. */
+  .link-wipe {
+    position: relative;
+    display: inline-block;
+  }
+
+  .link-wipe::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -0.08em;
+    left: 0;
+    height: 1px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .link-wipe:hover::after,
+  .link-wipe:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
   /* Tech names in the stack paragraph wipe an accent underline on hover. */
   .tech-link {
     position: relative;
@@ -131,7 +162,7 @@
     background-color: var(--color-accent);
     transform: scaleX(0);
     transform-origin: left center;
-    transition: transform 0.3s ease;
+    transition: transform var(--dur-fast) var(--ease-out);
   }
 
   .tech-link:hover::after,
@@ -231,6 +262,10 @@ html[data-paper="true"] .site-header [data-header-cta]:hover {
   border-color: #0a0a0b;
   background-color: #0a0a0b;
   color: #ecebe6;
+}
+
+html[data-paper="true"] .section-indicator {
+  color: #0a0a0b;
 }
 
 /* Preloader: the inline boot script hides it for returning / reduced-motion

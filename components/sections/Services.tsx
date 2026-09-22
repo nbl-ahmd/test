@@ -8,6 +8,7 @@ import { isMobileViewport, prefersReducedMotion } from "@/lib/motion";
 import { setSceneTarget } from "@/lib/scene-store";
 import { SERVICE_STEP_ROTATION } from "@/lib/scene-keyframes";
 import Container from "@/components/layout/Container";
+import LineReveal from "@/components/ui/LineReveal";
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,13 +73,16 @@ export default function Services() {
       <div className="pt-24 md:pt-32">
         <Container>
           <p className="label text-muted">{site.services.label}</p>
-          <h2
+          <LineReveal
+            as="h2"
             id="services-title"
             className="mt-6 text-[clamp(2rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+            stagger={0.1}
+            start="top 80%"
           >
             {site.services.heading}{" "}
             <em className="accent-italic">{site.services.headingEmphasis}</em>
-          </h2>
+          </LineReveal>
           <p className="label mt-4 text-muted">{site.services.note}</p>
         </Container>
       </div>

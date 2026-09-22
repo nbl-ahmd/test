@@ -4,6 +4,7 @@ import { useRef, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { isFinePointer, prefersReducedMotion } from "@/lib/motion";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 type MagneticProps = {
   children: ReactNode;
@@ -23,8 +24,8 @@ export default function Magnetic({
       const el = ref.current;
       if (!el || !isFinePointer() || prefersReducedMotion()) return;
 
-      const xTo = gsap.quickTo(el, "x", { duration: 0.6, ease: "power3.out" });
-      const yTo = gsap.quickTo(el, "y", { duration: 0.6, ease: "power3.out" });
+      const xTo = gsap.quickTo(el, "x", { duration: DUR.base, ease: EASE.out });
+      const yTo = gsap.quickTo(el, "y", { duration: DUR.base, ease: EASE.out });
 
       const onPointerMove = (event: PointerEvent) => {
         const rect = el.getBoundingClientRect();

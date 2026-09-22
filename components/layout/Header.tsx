@@ -8,6 +8,8 @@ import { scrollToId, scrollToTop } from "@/lib/scroll";
 import Magnetic from "@/components/ui/Magnetic";
 import MenuOverlay from "@/components/layout/MenuOverlay";
 import Container from "@/components/layout/Container";
+import Logomark from "@/components/ui/Logomark";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -22,8 +24,8 @@ export default function Header() {
       if (!el) return;
 
       const yTo = gsap.quickTo(el, "yPercent", {
-        duration: 0.45,
-        ease: "power2.out",
+        duration: DUR.fast,
+        ease: EASE.out,
       });
       yToRef.current = yTo;
 
@@ -75,10 +77,13 @@ export default function Header() {
           <a
             href="#hero"
             onClick={handleTop}
-            className="text-[1.05rem] font-medium tracking-tight"
+            className="flex items-center gap-2 text-[1.05rem] font-medium tracking-tight"
           >
-            {site.wordmark}
-            <span className="align-super text-[0.55em]">{site.mark}</span>
+            <Logomark className="size-5 shrink-0" />
+            <span>
+              {site.wordmark}
+              <span className="align-super text-[0.55em]">{site.mark}</span>
+            </span>
           </a>
 
           <div className="flex items-center gap-2 md:gap-6">

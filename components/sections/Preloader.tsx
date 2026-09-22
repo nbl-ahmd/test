@@ -7,6 +7,8 @@ import { site } from "@/content/site";
 import { markRevealed } from "@/lib/intro";
 import { startScroll, stopScroll } from "@/lib/scroll";
 import { prefersReducedMotion } from "@/lib/motion";
+import Logomark from "@/components/ui/Logomark";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 const LETTERS = [...site.wordmark];
 
@@ -52,16 +54,21 @@ export default function Preloader() {
 
       timeline
         .from(
-          "[data-letter]",
-          { yPercent: 120, duration: 0.6, stagger: 0.035, ease: "power3.out" },
+          "[data-mark]",
+          { autoAlpha: 0, scale: 0.6, duration: DUR.base, ease: EASE.out },
           0,
+        )
+        .from(
+          "[data-letter]",
+          { yPercent: 120, duration: DUR.base, stagger: 0.035, ease: EASE.out },
+          0.1,
         )
         .to(
           counter,
           {
             value: 100,
-            duration: 1.1,
-            ease: "power2.inOut",
+            duration: DUR.slow,
+            ease: EASE.inOut,
             onUpdate: () => {
               if (counterEl) {
                 counterEl.textContent = String(
@@ -74,19 +81,20 @@ export default function Preloader() {
         )
         .to(
           "[data-letter]",
-          { yPercent: -120, duration: 0.5, stagger: 0.03, ease: "power3.in" },
+          { yPercent: -120, duration: DUR.fast, stagger: 0.03, ease: EASE.in },
           1,
         )
-        .to("[data-counter]", { autoAlpha: 0, duration: 0.3 }, 0.95)
+        .to("[data-mark]", { autoAlpha: 0, duration: DUR.fast, ease: EASE.in }, 1)
+        .to("[data-counter]", { autoAlpha: 0, duration: DUR.fast }, 0.95)
         .add(() => markRevealed(), 1.05)
         .to(
           "[data-panel-top]",
-          { yPercent: -100, duration: 0.75, ease: "power4.inOut" },
+          { yPercent: -100, duration: DUR.base, ease: EASE.inOut },
           1.05,
         )
         .to(
           "[data-panel-bottom]",
-          { yPercent: 100, duration: 0.75, ease: "power4.inOut" },
+          { yPercent: 100, duration: DUR.base, ease: EASE.inOut },
           1.05,
         );
     },
@@ -106,6 +114,9 @@ export default function Preloader() {
       />
 
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-8">
+        <span data-mark className="text-accent">
+          <Logomark className="size-9" />
+        </span>
         <span className="flex overflow-hidden text-2xl font-medium tracking-tight">
           {LETTERS.map((letter, index) => (
             <span key={`${letter}-${index}`} data-letter className="inline-block">

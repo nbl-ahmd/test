@@ -1,6 +1,7 @@
 import { site } from "@/content/site";
 import ContactForm from "@/components/ui/ContactForm";
 import Container from "@/components/layout/Container";
+import LineReveal from "@/components/ui/LineReveal";
 
 export default function Contact() {
   const { contact } = site;
@@ -14,13 +15,16 @@ export default function Contact() {
       <Container className="grid gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div>
           <p className="label text-muted">{contact.label}</p>
-          <h2
+          <LineReveal
+            as="h2"
             id="contact-title"
             className="mt-6 text-[clamp(2.2rem,5vw,4rem)] leading-[1.03] font-medium tracking-[-0.03em] text-balance"
+            stagger={0.08}
+            yPercent={105}
           >
             {contact.title}{" "}
             <em className="accent-italic">{contact.titleEmphasis}</em>
-          </h2>
+          </LineReveal>
           <div className="mt-10">
             <ContactForm />
           </div>
@@ -43,7 +47,7 @@ export default function Contact() {
             <p>
               <a
                 href={`mailto:${site.email}`}
-                className="text-lg transition-colors hover:text-accent"
+                className="link-wipe text-lg transition-colors hover:text-accent"
               >
                 {site.email}
               </a>

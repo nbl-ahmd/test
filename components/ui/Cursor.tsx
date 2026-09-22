@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { isFinePointer, prefersReducedMotion } from "@/lib/motion";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 const INTERACTIVE = "a, button, [data-cursor], summary, input, textarea, select";
 
@@ -27,23 +28,29 @@ export default function Cursor() {
       if (!isFinePointer() || prefersReducedMotion()) return;
 
       gsap.set(dot, { xPercent: -50, yPercent: -50, scale: 0.178, opacity: 0 });
+      gsap.set(label, { scale: 0.7, opacity: 0 });
 
-      const xTo = gsap.quickTo(dot, "x", { duration: 0.35, ease: "power3.out" });
-      const yTo = gsap.quickTo(dot, "y", { duration: 0.35, ease: "power3.out" });
+      const xTo = gsap.quickTo(dot, "x", { duration: DUR.fast, ease: EASE.out });
+      const yTo = gsap.quickTo(dot, "y", { duration: DUR.fast, ease: EASE.out });
 
       let hovered: Element | null = null;
       let visible = false;
 
       const grow = (text: string | null) => {
-        gsap.to(dot, { scale: 1, duration: 0.4, ease: "power3.out" });
+        gsap.to(dot, { scale: 1, duration: DUR.fast, ease: EASE.out });
         label.textContent = text ?? "";
-        gsap.to(label, { opacity: text ? 1 : 0, duration: 0.25 });
+        gsap.to(label, {
+          opacity: text ? 1 : 0,
+          scale: text ? 1 : 0.7,
+          duration: DUR.fast,
+          ease: EASE.out,
+        });
       };
 
       const shrink = () => {
         hovered = null;
-        gsap.to(dot, { scale: 0.178, duration: 0.4, ease: "power3.out" });
-        gsap.to(label, { opacity: 0, duration: 0.2 });
+        gsap.to(dot, { scale: 0.178, duration: DUR.fast, ease: EASE.out });
+        gsap.to(label, { opacity: 0, scale: 0.7, duration: DUR.fast });
       };
 
       const onPointerMove = (event: PointerEvent) => {
@@ -51,7 +58,7 @@ export default function Cursor() {
         yTo(event.clientY);
         if (visible) return;
         visible = true;
-        gsap.to(dot, { opacity: 1, duration: 0.2 });
+        gsap.to(dot, { opacity: 1, duration: DUR.fast, ease: EASE.out });
       };
 
       const onPointerOver = (event: PointerEvent) => {
@@ -70,7 +77,7 @@ export default function Cursor() {
 
       const onWindowLeave = () => {
         visible = false;
-        gsap.to(dot, { opacity: 0, duration: 0.2 });
+        gsap.to(dot, { opacity: 0, duration: DUR.fast, ease: EASE.out });
       };
 
       window.addEventListener("pointermove", onPointerMove, { passive: true });

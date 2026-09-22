@@ -7,6 +7,8 @@ import { site } from "@/content/site";
 import { scrollToId, startScroll, stopScroll } from "@/lib/scroll";
 import { prefersReducedMotion } from "@/lib/motion";
 import Container from "@/components/layout/Container";
+import Logomark from "@/components/ui/Logomark";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 type MenuOverlayProps = {
   open: boolean;
@@ -39,8 +41,8 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
         });
         tl.to(panel, {
           clipPath: "inset(0% 0% 100% 0%)",
-          duration: 0.5,
-          ease: "power3.inOut",
+          duration: DUR.fast,
+          ease: EASE.inOut,
         });
         return;
       }
@@ -60,17 +62,17 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
         .fromTo(
           panel,
           { clipPath: "inset(0% 0% 100% 0%)" },
-          { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8, ease: "power4.inOut" },
+          { clipPath: "inset(0% 0% 0% 0%)", duration: DUR.base, ease: EASE.inOut },
           0,
         )
         .from(
           splits.flatMap((split) => split.chars),
-          { yPercent: 120, duration: 0.7, ease: "power3.out", stagger: 0.018 },
+          { yPercent: 120, duration: DUR.base, ease: EASE.out, stagger: 0.018 },
           0.2,
         )
         .from(
           "[data-menu-item]",
-          { autoAlpha: 0, y: 24, duration: 0.6, ease: "power2.out", stagger: 0.07 },
+          { autoAlpha: 0, y: 24, duration: DUR.base, ease: EASE.out, stagger: 0.07 },
           0.35,
         );
 
@@ -149,9 +151,12 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
     >
       <div ref={panelRef} className="absolute inset-0 flex flex-col bg-bg">
         <Container className="flex items-center justify-between py-4 md:py-5">
-          <span className="font-medium tracking-tight">
-            {site.wordmark}
-            <span className="align-super text-[0.55em]">{site.mark}</span>
+          <span className="flex items-center gap-2 font-medium tracking-tight">
+            <Logomark className="size-5 shrink-0" />
+            <span>
+              {site.wordmark}
+              <span className="align-super text-[0.55em]">{site.mark}</span>
+            </span>
           </span>
           <button
             ref={closeRef}

@@ -6,6 +6,7 @@ import { gsap, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
 import Container from "@/components/layout/Container";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -60,35 +61,35 @@ export default function Manifesto() {
         )
           .to(
             statementWrap,
-            { autoAlpha: 0, yPercent: -6, duration: 1.2, ease: "power2.in" },
+            { autoAlpha: 0, yPercent: -6, duration: DUR.slow, ease: EASE.in },
             "+=0.3",
           )
           .set(statementWrap, { display: "none" })
           .fromTo(
             lines,
             { autoAlpha: 0 },
-            { autoAlpha: 1, duration: 0.8, ease: "power2.out" },
+            { autoAlpha: 1, duration: DUR.base, ease: EASE.out },
           );
 
         principles.forEach((_, index) => {
           tl.to(
             titles[index],
-            { opacity: 1, duration: 0.6, ease: "power2.out" },
+            { opacity: 1, duration: DUR.base, ease: EASE.out },
             "+=0.4",
           ).to(
             bodies[index],
-            { maxHeight: 260, autoAlpha: 1, duration: 0.6, ease: "power2.out" },
+            { maxHeight: 260, autoAlpha: 1, duration: DUR.base, ease: EASE.out },
             "<",
           );
 
           if (index < principles.length - 1) {
             tl.to(
               titles[index],
-              { opacity: 0.15, duration: 0.6, ease: "power2.in" },
+              { opacity: 0.15, duration: DUR.base, ease: EASE.in },
               "+=0.9",
             ).to(
               bodies[index],
-              { maxHeight: 0, autoAlpha: 0, duration: 0.6, ease: "power2.in" },
+              { maxHeight: 0, autoAlpha: 0, duration: DUR.base, ease: EASE.in },
               "<",
             );
           }

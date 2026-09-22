@@ -14,7 +14,7 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
           <li key={`${title}-${link.label}`}>
             <a
               href={link.href}
-              className="text-fg/85 transition-colors hover:text-accent"
+              className="link-wipe text-fg/85 transition-colors hover:text-accent"
             >
               {link.label}
             </a>
@@ -55,7 +55,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${site.email}`}
-                  className="text-fg/85 transition-colors hover:text-accent"
+                  className="link-wipe text-fg/85 transition-colors hover:text-accent"
                 >
                   {site.email}
                 </a>

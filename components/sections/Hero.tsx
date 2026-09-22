@@ -6,6 +6,7 @@ import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { onRevealed } from "@/lib/intro";
 import { prefersReducedMotion } from "@/lib/motion";
+import { DUR, EASE } from "@/lib/motion-tokens";
 import { scrollToId } from "@/lib/scroll";
 import LocalTime from "@/components/ui/LocalTime";
 import Magnetic from "@/components/ui/Magnetic";
@@ -51,13 +52,19 @@ export default function Hero() {
       timeline
         .from(split.lines, {
           yPercent: 110,
-          duration: 1,
-          ease: "power4.out",
+          duration: DUR.slow,
+          ease: EASE.out,
           stagger: 0.08,
         })
         .from(
           "[data-hero-fade]",
-          { y: 24, autoAlpha: 0, duration: 0.7, ease: "power3.out", stagger: 0.09 },
+          {
+            y: 24,
+            autoAlpha: 0,
+            duration: DUR.base,
+            ease: EASE.out,
+            stagger: 0.09,
+          },
           0.3,
         );
       timelineRef.current = timeline;

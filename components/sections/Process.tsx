@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
 import Container from "@/components/layout/Container";
+import LineReveal from "@/components/ui/LineReveal";
 
 const THREAD_PATH =
   "M0 300 C 300 120 500 120 700 300 S 1100 480 1400 300 S 1800 120 2100 300 S 2500 480 2800 300";
@@ -74,17 +75,22 @@ export default function Process() {
     >
       <Container className="pt-24 md:pt-32">
         <p className="label text-muted">{site.process.label}</p>
-        <h2
+        <LineReveal
+          as="h2"
           id="process-title"
           className="mt-6 text-[clamp(2rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+          stagger={0.08}
+          yPercent={120}
+          start="top 78%"
         >
           {site.process.heading}{" "}
           <em className="accent-italic">{site.process.headingEmphasis}</em>
-        </h2>
+        </LineReveal>
       </Container>
 
       <div
         ref={pinRef}
+        data-cursor="drag"
         className="relative mt-14 motion-safe:md:mt-0 motion-safe:md:h-svh motion-safe:md:overflow-hidden"
       >
         <div

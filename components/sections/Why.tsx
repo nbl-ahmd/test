@@ -6,6 +6,8 @@ import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
 import Container from "@/components/layout/Container";
+import LineReveal from "@/components/ui/LineReveal";
+import { EASE } from "@/lib/motion-tokens";
 
 export default function Why() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -47,7 +49,7 @@ export default function Why() {
         {
           clipPath: "inset(0% 0% 0% 0% round 0px)",
           scale: 1,
-          ease: "power2.out",
+          ease: EASE.out,
           scrollTrigger: {
             trigger: panel,
             start: "top 90%",
@@ -94,13 +96,16 @@ export default function Why() {
         style={{ willChange: "clip-path, transform" }}
       >
         <Container className="py-28 md:py-40">
-          <p className="label text-[#0a0a0b]/60">{why.label}</p>
-          <h2
+          <p className="label text-[#0a0a0b]/70">{why.label}</p>
+          <LineReveal
+            as="h2"
             id="why-title"
             className="mt-6 max-w-[18ch] text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.08] font-medium tracking-[-0.03em] text-balance"
+            stagger={0.09}
+            start="top 80%"
           >
             {why.heading}
-          </h2>
+          </LineReveal>
 
           <div className="mt-16 border-t border-[#0a0a0b]/15">
             {why.rows.map((row) => (
@@ -108,8 +113,8 @@ export default function Why() {
                 key={row.label}
                 className="grid gap-3 border-b border-[#0a0a0b]/15 py-8 md:grid-cols-[minmax(0,0.6fr)_minmax(0,1fr)_minmax(0,1.1fr)] md:items-baseline md:gap-10"
               >
-                <span className="label text-[#0a0a0b]/55">{row.label}</span>
-                <span className="relative inline-block w-fit text-[clamp(1.15rem,2.4vw,1.9rem)] leading-[1.25] text-[#0a0a0b]/50">
+                <span className="label text-[#0a0a0b]/70">{row.label}</span>
+                <span className="relative inline-block w-fit text-[clamp(1.15rem,2.4vw,1.9rem)] leading-[1.25] text-[#0a0a0b]/65">
                   {row.typical}
                   <span
                     data-strike

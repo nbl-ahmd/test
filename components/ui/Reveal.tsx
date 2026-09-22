@@ -4,6 +4,7 @@ import { useRef, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { prefersReducedMotion } from "@/lib/motion";
+import { DUR, EASE } from "@/lib/motion-tokens";
 
 type RevealProps = {
   children: ReactNode;
@@ -40,8 +41,8 @@ export default function Reveal({
       gsap.from(list, {
         y,
         autoAlpha: 0,
-        duration: 0.8,
-        ease: "power3.out",
+        duration: DUR.base,
+        ease: EASE.out,
         stagger,
         scrollTrigger: { trigger: el, start },
       });

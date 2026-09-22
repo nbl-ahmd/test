@@ -7,6 +7,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Grain from "@/components/ui/Grain";
 import Cursor from "@/components/ui/Cursor";
+import SectionIndicator from "@/components/ui/SectionIndicator";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 import SceneCanvas from "@/components/three/SceneCanvas";
 import SceneSections from "@/components/three/SceneSections";
 import SceneDebug from "@/components/three/SceneDebug";
@@ -95,7 +97,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main id="main">{children}</main>
           <Footer />
           <SceneSections />
+          <SectionIndicator />
         </SmoothScroll>
+        <ScrollProgress />
         <Grain />
         <Cursor />
         <SceneDebug />

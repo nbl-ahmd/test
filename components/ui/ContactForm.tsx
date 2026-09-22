@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { contactSchema, fieldErrors } from "@/lib/contact-schema";
 import { site } from "@/content/site";
+import Magnetic from "@/components/ui/Magnetic";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -228,13 +229,16 @@ export default function ContactForm() {
         />
       </div>
 
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="label inline-flex items-center rounded-full bg-accent px-6 py-3 text-bg transition-colors hover:bg-fg disabled:opacity-60"
-      >
-        {status === "submitting" ? "Sending…" : site.contact.submitLabel}
-      </button>
+      <Magnetic>
+        <button
+          type="submit"
+          data-cursor="open"
+          disabled={status === "submitting"}
+          className="label inline-flex items-center rounded-full bg-accent px-6 py-3 text-bg transition-colors hover:bg-fg disabled:opacity-60"
+        >
+          {status === "submitting" ? "Sending…" : site.contact.submitLabel}
+        </button>
+      </Magnetic>
     </form>
   );
 }
