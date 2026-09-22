@@ -32,7 +32,8 @@
    and JS agree; `touch` is its complement. Both exclude reduced motion from
    the pinned/full-height layouts so those fall back to stacked content. */
 @custom-variant desktop (@media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference));
-@custom-variant touch (@media (max-width: 1023px), (hover: none));
+@custom-variant touch (@media (max-width: 1023px));
+@custom-variant nohover (@media (hover: none));
 
 @layer base {
   :root {

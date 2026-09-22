@@ -136,7 +136,7 @@ export default function Work() {
                             {/* Touch/small screens: the browser mock renders
                                 inside the expanded row instead of following a
                                 cursor. */}
-                            <span className="mt-5 hidden touch:block motion-reduce:block">
+                            <span className="mt-5 hidden touch:block nohover:block motion-reduce:block">
                               <span className="relative block aspect-[16/10] w-full overflow-hidden rounded-lg border border-line">
                                 <ProjectMock project={project} />
                               </span>

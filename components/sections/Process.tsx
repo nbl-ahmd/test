@@ -141,7 +141,7 @@ export default function Process() {
       >
         <svg
           aria-hidden="true"
-          className="pointer-events-none absolute top-0 left-[calc(var(--gutter)/2)] hidden h-full w-px overflow-visible touch:block motion-reduce:block"
+          className="pointer-events-none absolute top-0 left-[calc(var(--gutter)/2)] hidden h-full w-px overflow-visible touch:block nohover:block motion-reduce:block"
         >
           <line
             ref={threadVRef}
