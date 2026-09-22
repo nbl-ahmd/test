@@ -12,9 +12,8 @@ export type SectionKeyframe = SceneTarget;
 export const SECTION_KEYFRAMES: Record<string, SectionKeyframe> = {
   hero: { shape: 0, dim: 1, stage: "hero", x: 0, camZ: 6.5, rotY: 0, turbulence: 0.32 },
   manifesto: { shape: 1, dim: 0.5, stage: "right", x: 0, camZ: 7.2, rotY: 0, turbulence: 0 },
-  principles: { shape: 1, dim: 0.45, stage: "right", x: 0, camZ: 7.3, rotY: 0.15, turbulence: 0 },
   services: { shape: 2, dim: 0.5, stage: "right", x: 0, camZ: 7, rotY: 0, turbulence: 0 },
-  clients: { shape: 2, dim: 0.35, stage: "right", x: 0, camZ: 7.2, rotY: 0.45, turbulence: 0 },
+  clients: { shape: 2, dim: 0.15, stage: "right", x: 0, camZ: 7.2, rotY: 0.45, turbulence: 0 },
   process: { shape: 3, dim: 0.3, stage: "hero", x: 0, camZ: 6.5, rotY: 0, turbulence: 0 },
   work: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 0.4, turbulence: 0 },
   why: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 0.7, turbulence: 0 },

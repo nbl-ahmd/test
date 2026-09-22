@@ -31,16 +31,18 @@ export type Service = {
   timeline: string;
 };
 
-export type ClientType = {
-  index: string;
-  title: string;
-  body: string;
+export type ClientStatementPart = {
+  text: string;
+  /** Bracketed ideas that get the drawn accent underline. */
+  accent?: boolean;
 };
 
 export type ProcessStep = {
   index: string;
   name: string;
   timing: string;
+  /** One sentence shown on the horizontal process panel. */
+  sentence: string;
   tasks: string[];
   outcome: string;
 };
@@ -151,8 +153,7 @@ export type SiteConfig = {
   };
   clients: {
     label: string;
-    heading: string;
-    items: ClientType[];
+    statement: ClientStatementPart[];
   };
   process: {
     label: string;
@@ -345,28 +346,16 @@ export const site: SiteConfig = {
   },
   clients: {
     label: "( who we work with )",
-    heading: "Built for teams who need to ship",
-    items: [
-      {
-        index: "01",
-        title: "Startups & founders",
-        body: "Ship a credible MVP fast, without accumulating tech debt.",
-      },
-      {
-        index: "02",
-        title: "Growing businesses",
-        body: "Outgrow templates and spreadsheets with software that fits.",
-      },
-      {
-        index: "03",
-        title: "Agencies (white-label)",
-        body: "A dependable build partner behind your brand.",
-      },
-      {
-        index: "04",
-        title: "Teams needing extra hands",
-        body: "Embed a senior engineer + designer for a sprint or a quarter.",
-      },
+    statement: [
+      { text: "For " },
+      { text: "startups", accent: true },
+      { text: " shipping a first version, " },
+      { text: "growing businesses", accent: true },
+      { text: " outgrowing spreadsheets, " },
+      { text: "agencies", accent: true },
+      { text: " needing a build partner, and " },
+      { text: "in-house teams", accent: true },
+      { text: " short on hands." },
     ],
   },
   process: {
@@ -378,6 +367,8 @@ export const site: SiteConfig = {
         index: "01",
         name: "Discover",
         timing: "Week 0–1",
+        sentence:
+          "We start with your goals, users and constraints, then agree the smallest scope that proves the idea.",
         tasks: [
           "Kickoff workshop on goals, users and constraints",
           "Success metrics & scope",
@@ -389,6 +380,8 @@ export const site: SiteConfig = {
         index: "02",
         name: "Design",
         timing: "Week 1–2+",
+        sentence:
+          "We turn the brief into a clickable prototype and a design system before a line of code.",
         tasks: [
           "Moodboard → wireframes → clickable prototype",
           "Design system (type, colour, components)",
@@ -400,6 +393,8 @@ export const site: SiteConfig = {
         index: "03",
         name: "Build",
         timing: "Weeks 2–8",
+        sentence:
+          "One-week sprints with a live staging link from day one, so you watch it come together.",
         tasks: [
           "One-week sprints with a live staging link from day one",
           "Weekly demo call",
@@ -411,6 +406,8 @@ export const site: SiteConfig = {
         index: "04",
         name: "Launch & care",
         timing: "Ongoing",
+        sentence:
+          "We ship, instrument and document it, then stay on for a month of free support.",
         tasks: [
           "Launch checklist, analytics & monitoring",
           "Handover docs and training",

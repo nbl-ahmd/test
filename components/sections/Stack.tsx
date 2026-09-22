@@ -1,5 +1,5 @@
+import { Fragment } from "react";
 import { site } from "@/content/site";
-import Reveal from "@/components/ui/Reveal";
 import Marquee from "@/components/ui/Marquee";
 import Container from "@/components/layout/Container";
 
@@ -23,23 +23,22 @@ export default function Stack() {
       </div>
 
       <Container>
-        <Reveal className="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-          {stack.groups.map((group) => (
-            <div key={group.title} data-reveal>
-              <h3 className="label text-muted">{group.title}</h3>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-full border border-line px-3 py-1.5 text-sm text-fg/85"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <p className="mt-16 max-w-[62ch] text-[clamp(1.5rem,3.4vw,3rem)] leading-[1.35] font-medium tracking-[-0.03em] text-pretty">
+          {stack.groups.map((group, groupIndex) => (
+            <Fragment key={group.title}>
+              <span className="label mr-3 align-middle text-muted">
+                {group.title}
+              </span>
+              {group.items.map((item, itemIndex) => (
+                <Fragment key={item}>
+                  <span className="tech-link">{item}</span>
+                  {itemIndex < group.items.length - 1 ? " / " : ""}
+                </Fragment>
+              ))}
+              {groupIndex < stack.groups.length - 1 ? " / " : ""}
+            </Fragment>
           ))}
-        </Reveal>
+        </p>
 
         <p className="mt-14 text-muted">{stack.footnote}</p>
       </Container>

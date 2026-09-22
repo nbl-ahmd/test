@@ -108,6 +108,37 @@
     column-gap: clamp(1rem, 2vw, 2rem);
   }
 
+  /* Outlined display numerals for the horizontal process panels. */
+  .outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-muted);
+  }
+
+  /* Tech names in the stack paragraph wipe an accent underline on hover. */
+  .tech-link {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .tech-link::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0.04em;
+    left: 0;
+    height: 1px;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.3s ease;
+  }
+
+  .tech-link:hover::after,
+  .tech-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
   /* Soft paper-toned halo so hero copy stays legible over the woven scene
      without turning into an opaque card. Sits above the fixed scene because
      the section creates its own stacking context. */
