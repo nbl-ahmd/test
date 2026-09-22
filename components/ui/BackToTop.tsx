@@ -11,7 +11,7 @@ export default function BackToTop() {
         type="button"
         onClick={scrollToTop}
         data-cursor="open"
-        className="label inline-flex items-center gap-2 rounded-full border border-line px-4 py-2.5 transition-colors hover:border-fg hover:bg-fg hover:text-bg"
+        className="label inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 py-2.5 transition-colors hover:border-fg hover:bg-fg hover:text-bg"
       >
         <svg
           aria-hidden="true"

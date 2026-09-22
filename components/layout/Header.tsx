@@ -52,6 +52,18 @@ export default function Header() {
     if (open) yToRef.current?.(0);
   }, [open]);
 
+  // Expose menu state to CSS (e.g. hide the mobile CTA bar while open).
+  useEffect(() => {
+    if (open) {
+      document.documentElement.dataset.menu = "true";
+    } else {
+      delete document.documentElement.dataset.menu;
+    }
+    return () => {
+      delete document.documentElement.dataset.menu;
+    };
+  }, [open]);
+
   const closeMenu = () => {
     setOpen(false);
     menuButtonRef.current?.focus();
@@ -71,18 +83,18 @@ export default function Header() {
     <>
       <header
         ref={headerRef}
-        className="site-header fixed inset-x-0 top-0 z-50 will-change-transform"
+        className="site-header fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)] will-change-transform"
       >
         <Container className="flex items-center justify-between py-4 md:py-5">
           <a
             href="#hero"
             onClick={handleTop}
-            className="flex items-center gap-2 text-[1.05rem] font-medium tracking-tight"
+            className="flex min-h-11 items-center gap-2 text-[1.05rem] font-medium tracking-tight"
           >
             <Logomark className="size-5 shrink-0" />
             <span>
               {site.wordmark}
-              <span className="align-super text-[0.55em]">{site.mark}</span>
+              <span className="align-super text-[0.75em]">{site.mark}</span>
             </span>
           </a>
 
@@ -94,22 +106,24 @@ export default function Header() {
               aria-haspopup="dialog"
               aria-expanded={open}
               aria-controls="site-menu"
-              className="label inline-flex items-center px-1 py-2 text-muted transition-colors hover:text-fg"
+              className="label inline-flex min-h-11 min-w-11 items-center justify-center px-2 text-muted transition-colors hover:text-fg"
             >
               Menu
             </button>
 
-            <Magnetic>
-              <a
-                href={site.cta.href}
-                data-cursor="open"
-                data-header-cta
-                onClick={(event) => handleNav(event, "contact")}
-                className="label inline-flex items-center rounded-full border border-line px-4 py-2.5 whitespace-nowrap transition-colors hover:border-fg hover:bg-fg hover:text-bg md:px-5"
-              >
-                {site.cta.label}
-              </a>
-            </Magnetic>
+            <span className="hidden md:inline-block">
+              <Magnetic>
+                <a
+                  href={site.cta.href}
+                  data-cursor="open"
+                  data-header-cta
+                  onClick={(event) => handleNav(event, "contact")}
+                  className="label inline-flex min-h-11 items-center rounded-full border border-line px-4 py-2.5 whitespace-nowrap transition-colors hover:border-fg hover:bg-fg hover:text-bg md:px-5"
+                >
+                  {site.cta.label}
+                </a>
+              </Magnetic>
+            </span>
           </div>
         </Container>
       </header>

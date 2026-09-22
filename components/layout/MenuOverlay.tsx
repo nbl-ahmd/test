@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type MouseEvent } from "react";
+import { useEffect, useRef, type MouseEvent, type TouchEvent } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
@@ -140,6 +140,22 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
     requestAnimationFrame(() => scrollToId(id));
   };
 
+  // Swipe down or right to dismiss the overlay on touch devices.
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    if (dx > 80 || dy > 80) onClose();
+  };
+
   return (
     <div
       id="site-menu"
@@ -149,20 +165,25 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
       aria-label="Site menu"
       className="invisible fixed inset-0 z-[60]"
     >
-      <div ref={panelRef} className="absolute inset-0 flex flex-col bg-bg">
-        <Container className="flex items-center justify-between py-4 md:py-5">
+      <div
+        ref={panelRef}
+        className="absolute inset-0 flex h-[100dvh] flex-col bg-bg"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        <Container className="flex items-center justify-between pt-[calc(env(safe-area-inset-top)+1rem)] pb-4 md:pb-5">
           <span className="flex items-center gap-2 font-medium tracking-tight">
             <Logomark className="size-5 shrink-0" />
             <span>
               {site.wordmark}
-              <span className="align-super text-[0.55em]">{site.mark}</span>
+              <span className="align-super text-[0.75em]">{site.mark}</span>
             </span>
           </span>
           <button
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="label inline-flex items-center px-1 py-2"
+            className="label inline-flex min-h-11 min-w-11 items-center justify-center px-2"
           >
             Close
           </button>
@@ -175,7 +196,7 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
               href={item.href}
               data-cursor="view"
               onClick={(event) => handleNav(event, item.id)}
-              className="group flex items-baseline gap-4 border-b border-line py-3 md:gap-8 md:py-4"
+              className="group flex min-h-14 items-baseline gap-4 border-b border-line py-3 md:gap-8 md:py-4"
             >
               <span data-menu-item className="label text-muted">
                 {item.index}
@@ -188,13 +209,23 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
               </span>
             </a>
           ))}
+
+          <a
+            href={site.cta.href}
+            data-menu-item
+            data-cursor="open"
+            onClick={(event) => handleNav(event, "contact")}
+            className="label mt-8 inline-flex min-h-14 w-full items-center justify-center rounded-full bg-accent px-6 text-bg transition-colors hover:bg-fg"
+          >
+            {site.cta.label}
+          </a>
         </Container>
 
-        <Container className="flex flex-wrap items-center justify-between gap-4 pb-6">
+        <Container className="flex flex-wrap items-center justify-between gap-4 pb-[calc(env(safe-area-inset-bottom)+1.5rem)]">
           <a
             data-menu-item
             href={`mailto:${site.email}`}
-            className="label text-muted hover:text-fg"
+            className="label inline-flex min-h-11 items-center text-muted hover:text-fg"
           >
             {site.email}
           </a>
@@ -206,7 +237,7 @@ export default function MenuOverlay({ open, onClose }: MenuOverlayProps) {
                   target="_blank"
                   rel="noreferrer"
                   data-cursor="open"
-                  className="label text-muted hover:text-fg"
+                  className="label inline-flex min-h-11 items-center text-muted hover:text-fg"
                 >
                   {social.label}
                 </a>

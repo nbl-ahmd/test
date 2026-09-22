@@ -69,7 +69,7 @@ export default function Work() {
         <LineReveal
           as="h2"
           id="work-title"
-          className="mt-6 text-[clamp(2rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+          className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
           stagger={0.12}
           yPercent={100}
           start="top 82%"
@@ -147,7 +147,7 @@ export default function Work() {
                 href="#contact"
                 data-cursor="open"
                 onClick={(event) => handleClosing(event, "contact")}
-                className="text-xl font-medium tracking-[-0.02em] transition-colors hover:text-accent md:text-2xl"
+                className="inline-flex min-h-11 items-center text-xl font-medium tracking-[-0.02em] transition-colors hover:text-accent md:text-2xl"
               >
                 {site.work.closing} →
               </a>

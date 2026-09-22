@@ -103,7 +103,7 @@ export default function Cursor() {
     >
       <span
         ref={labelRef}
-        className="label text-[10px] text-bg opacity-0 select-none"
+        className="label text-[12px] text-bg opacity-0 select-none"
       />
     </div>
   );

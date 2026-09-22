@@ -9,6 +9,7 @@ import Grain from "@/components/ui/Grain";
 import Cursor from "@/components/ui/Cursor";
 import SectionIndicator from "@/components/ui/SectionIndicator";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+import MobileCta from "@/components/layout/MobileCta";
 import SceneCanvas from "@/components/three/SceneCanvas";
 import SceneSections from "@/components/three/SceneSections";
 import SceneDebug from "@/components/three/SceneDebug";
@@ -69,6 +70,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  // Zoom stays enabled (no maximumScale / userScalable). `cover` lets the
+  // layout reach into notch / home-indicator safe areas.
+  viewportFit: "cover",
+  interactiveWidget: "resizes-content",
   themeColor: "#0a0a0b",
   colorScheme: "dark",
 };
@@ -88,7 +93,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SceneCanvas />
         <a
           href="#main"
-          className="skip-link label rounded-full bg-fg px-4 py-2.5 text-bg"
+          className="skip-link label inline-flex min-h-11 items-center rounded-full bg-fg px-4 py-2.5 text-bg"
         >
           Skip to content
         </a>
@@ -100,6 +105,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SectionIndicator />
         </SmoothScroll>
         <ScrollProgress />
+        <MobileCta />
         <Grain />
         <Cursor />
         <SceneDebug />

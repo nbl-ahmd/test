@@ -100,7 +100,7 @@ export default function Why() {
           <LineReveal
             as="h2"
             id="why-title"
-            className="mt-6 max-w-[18ch] text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.08] font-medium tracking-[-0.03em] text-balance"
+            className="mt-6 max-w-[18ch] text-[clamp(2.4rem,4.5vw,3.75rem)] leading-[1.08] font-medium tracking-[-0.03em] text-balance"
             stagger={0.09}
             start="top 80%"
           >

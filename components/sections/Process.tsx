@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
+import { DESKTOP } from "@/lib/media";
 import Container from "@/components/layout/Container";
 import LineReveal from "@/components/ui/LineReveal";
 
@@ -29,7 +30,7 @@ export default function Process() {
 
       // Desktop: pin the stage and translate the track sideways, drawing the
       // thread in step with the horizontal travel.
-      mm.add("(min-width: 768px)", () => {
+      mm.add(DESKTOP, () => {
         const distance = () => track.scrollWidth - window.innerWidth;
 
         const tl = gsap.timeline({
@@ -78,7 +79,7 @@ export default function Process() {
         <LineReveal
           as="h2"
           id="process-title"
-          className="mt-6 text-[clamp(2rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+          className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
           stagger={0.08}
           yPercent={120}
           start="top 78%"
@@ -91,15 +92,15 @@ export default function Process() {
       <div
         ref={pinRef}
         data-cursor="drag"
-        className="relative mt-14 motion-safe:md:mt-0 motion-safe:md:h-svh motion-safe:md:overflow-hidden"
+        className="relative mt-14 desktop:mt-0 desktop:h-svh desktop:overflow-hidden"
       >
         <div
           ref={trackRef}
-          className="relative motion-safe:md:flex motion-safe:md:h-svh motion-safe:md:items-stretch"
+          className="relative desktop:flex desktop:h-svh desktop:items-stretch"
         >
           <svg
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 hidden h-full motion-safe:md:block"
+            className="pointer-events-none absolute inset-y-0 left-0 hidden h-full desktop:block"
             style={{ width: `${steps.length * 70}vw` }}
             viewBox="0 0 2800 600"
             preserveAspectRatio="none"
@@ -121,12 +122,12 @@ export default function Process() {
             <article
               key={step.index}
               data-process-panel
-              className="flex flex-col justify-center border-t border-line py-16 first:border-t-0 motion-safe:md:h-svh motion-safe:md:w-[70vw] motion-safe:md:shrink-0 motion-safe:md:border-t-0 motion-safe:md:py-0"
+              className="flex flex-col justify-center border-t border-line py-16 first:border-t-0 desktop:h-svh desktop:w-[70vw] desktop:shrink-0 desktop:border-t-0 desktop:py-0"
             >
               <div className="px-[var(--gutter)] md:max-w-[52ch]">
                 <span
                   aria-hidden="true"
-                  className="outline-text block text-[clamp(4rem,13vw,11rem)] leading-[0.85] font-medium tracking-[-0.04em]"
+                  className="outline-text block text-[clamp(3.5rem,12vw,9rem)] leading-[0.85] font-medium tracking-[-0.04em]"
                 >
                   {step.index}
                 </span>

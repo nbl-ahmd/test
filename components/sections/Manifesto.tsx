@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
+import { DESKTOP, TOUCH_OR_SMALL } from "@/lib/media";
 import Container from "@/components/layout/Container";
 import { DUR, EASE } from "@/lib/motion-tokens";
 
@@ -38,7 +39,7 @@ export default function Manifesto() {
 
       // Desktop: one pin carries the scrubbed statement, then hands the stage
       // to three giant lines that light up one after another.
-      mm.add("(min-width: 768px)", () => {
+      mm.add(DESKTOP, () => {
         gsap.set(bodies, { maxHeight: 0, autoAlpha: 0 });
         // Inactive lines sit at 40% (>=3:1 for their large type) rather than
         // 15%, so they remain legible while the active line holds focus.
@@ -106,7 +107,7 @@ export default function Manifesto() {
       });
 
       // Mobile: no pin — scrub the statement, show the lines as a plain stack.
-      mm.add("(max-width: 767px)", () => {
+      mm.add(TOUCH_OR_SMALL, () => {
         const tween = gsap.fromTo(
           split.words,
           { opacity: 0.45 },
@@ -163,7 +164,7 @@ export default function Manifesto() {
 
           <div
             ref={linesRef}
-            className="mt-14 motion-safe:md:absolute motion-safe:md:inset-x-0 motion-safe:md:top-0 motion-safe:md:mt-0"
+            className="mt-14 desktop:absolute desktop:inset-x-0 desktop:top-0 desktop:mt-0"
           >
             {principles.map((principle) => (
               <div

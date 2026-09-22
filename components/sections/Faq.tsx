@@ -19,7 +19,7 @@ export default function Faq() {
         <LineReveal
           as="h2"
           id="faq-title"
-          className="mt-6 text-[clamp(2rem,4.5vw,3.4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+          className="mt-6 text-[clamp(2.4rem,4.5vw,3.4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
           stagger={0.1}
           yPercent={115}
         >

@@ -19,7 +19,7 @@ export default function Contact() {
           <LineReveal
             as="h2"
             id="contact-title"
-            className="mt-6 text-[clamp(2.2rem,5vw,4rem)] leading-[1.03] font-medium tracking-[-0.03em] text-balance"
+            className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.03] font-medium tracking-[-0.03em] text-balance"
             stagger={0.08}
             yPercent={105}
           >
@@ -47,7 +47,7 @@ export default function Contact() {
             <p>
               <a
                 href={`mailto:${site.email}`}
-                className="link-wipe text-lg transition-colors hover:text-accent"
+                className="link-wipe inline-flex min-h-11 items-center text-lg transition-colors hover:text-accent"
               >
                 {site.email}
               </a>

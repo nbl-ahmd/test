@@ -14,7 +14,10 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
-    const lenis = new Lenis({ autoRaf: false });
+    // Touch devices scroll natively (syncTouch: false); Lenis only smooths
+    // wheel/trackpad input on fine pointers. The instance still tracks scroll
+    // so scene velocity and ScrollTrigger.update() keep working.
+    const lenis = new Lenis({ autoRaf: false, syncTouch: false });
     setLenis(lenis);
 
     const onScroll = (instance: Lenis) => {
@@ -30,15 +33,26 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     gsap.ticker.add(onTick);
     gsap.ticker.lagSmoothing(0);
 
+    // Re-measure triggers once fonts/content settle and on layout changes.
     let cancelled = false;
-    document.fonts.ready
-      .then(() => {
-        if (!cancelled) ScrollTrigger.refresh();
-      })
-      .catch(() => {});
+    let resizeTimer = 0;
+    const refresh = () => {
+      if (!cancelled) ScrollTrigger.refresh();
+    };
+    const onResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refresh, 200);
+    };
+
+    document.fonts.ready.then(refresh).catch(() => {});
+    window.addEventListener("orientationchange", refresh);
+    window.addEventListener("resize", onResize);
 
     return () => {
       cancelled = true;
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("orientationchange", refresh);
+      window.removeEventListener("resize", onResize);
       gsap.ticker.remove(onTick);
       lenis.off("scroll", onScroll);
       lenis.destroy();

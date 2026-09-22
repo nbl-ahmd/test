@@ -6,6 +6,7 @@ import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { onRevealed } from "@/lib/intro";
 import { prefersReducedMotion } from "@/lib/motion";
+import { DESKTOP } from "@/lib/media";
 import { DUR, EASE } from "@/lib/motion-tokens";
 import { scrollToId } from "@/lib/scroll";
 import LocalTime from "@/components/ui/LocalTime";
@@ -26,7 +27,7 @@ export default function Hero() {
       if (prefersReducedMotion()) return;
 
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px)", () => {
+      mm.add(DESKTOP, () => {
         const pin = ScrollTrigger.create({
           trigger: section,
           start: "top top",
@@ -134,7 +135,7 @@ export default function Hero() {
                   href={site.hero.primaryCta.href}
                   data-cursor="open"
                   onClick={(event) => handleNav(event, "contact")}
-                  className="label inline-flex items-center rounded-full bg-accent px-5 py-3 whitespace-nowrap text-bg transition-colors hover:bg-fg"
+                  className="label inline-flex min-h-11 items-center rounded-full bg-accent px-5 py-3 whitespace-nowrap text-bg transition-colors hover:bg-fg"
                 >
                   {site.hero.primaryCta.label}
                 </a>
@@ -144,7 +145,7 @@ export default function Hero() {
                   href={site.hero.secondaryCta.href}
                   data-cursor="view"
                   onClick={(event) => handleNav(event, "work")}
-                  className="label inline-flex items-center rounded-full border border-line px-5 py-3 transition-colors hover:border-fg"
+                  className="label inline-flex min-h-11 items-center rounded-full border border-line px-5 py-3 transition-colors hover:border-fg"
                 >
                   {site.hero.secondaryCta.label}
                 </a>

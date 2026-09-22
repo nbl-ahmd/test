@@ -8,7 +8,7 @@ import Magnetic from "@/components/ui/Magnetic";
 type Status = "idle" | "submitting" | "success" | "error";
 
 const inputClass =
-  "w-full rounded-md border border-line bg-transparent px-4 py-3 text-fg placeholder:text-muted focus:border-fg";
+  "w-full scroll-mt-28 rounded-md border border-line bg-transparent px-4 py-3 text-base text-fg placeholder:text-muted focus:border-fg";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -90,7 +90,7 @@ export default function ContactForm() {
         </p>
       ) : null}
 
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         <div>
           <label htmlFor="name" className="label text-muted">
             Name
@@ -99,6 +99,8 @@ export default function ContactForm() {
             id="name"
             name="name"
             type="text"
+            inputMode="text"
+            enterKeyHint="next"
             autoComplete="name"
             required
             aria-invalid={Boolean(errors.name)}
@@ -120,6 +122,8 @@ export default function ContactForm() {
             id="email"
             name="email"
             type="email"
+            inputMode="email"
+            enterKeyHint="next"
             autoComplete="email"
             required
             aria-invalid={Boolean(errors.email)}
@@ -151,7 +155,7 @@ export default function ContactForm() {
                 type="button"
                 aria-pressed={selected}
                 onClick={() => setProjectType(selected ? "" : type)}
-                className={`label rounded-full border px-3 py-2 transition-colors ${
+                className={`label inline-flex min-h-11 items-center rounded-full border px-3 py-2 transition-colors ${
                   selected
                     ? "border-accent bg-accent text-bg"
                     : "border-line text-muted hover:border-fg hover:text-fg"
@@ -184,7 +188,7 @@ export default function ContactForm() {
                 type="button"
                 aria-pressed={selected}
                 onClick={() => setBudget(selected ? "" : band)}
-                className={`label rounded-full border px-3 py-2 transition-colors ${
+                className={`label inline-flex min-h-11 items-center rounded-full border px-3 py-2 transition-colors ${
                   selected
                     ? "border-fg text-fg"
                     : "border-line text-muted hover:border-fg hover:text-fg"
@@ -205,6 +209,7 @@ export default function ContactForm() {
           id="message"
           name="message"
           rows={5}
+          enterKeyHint="send"
           required
           placeholder={site.contact.messagePlaceholder}
           aria-invalid={Boolean(errors.message)}
@@ -234,7 +239,7 @@ export default function ContactForm() {
           type="submit"
           data-cursor="open"
           disabled={status === "submitting"}
-          className="label inline-flex items-center rounded-full bg-accent px-6 py-3 text-bg transition-colors hover:bg-fg disabled:opacity-60"
+          className="label inline-flex min-h-11 items-center rounded-full bg-accent px-6 py-3 text-bg transition-colors hover:bg-fg disabled:opacity-60"
         >
           {status === "submitting" ? "Sending…" : site.contact.submitLabel}
         </button>

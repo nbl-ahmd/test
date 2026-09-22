@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { site } from "@/content/site";
 import { isMobileViewport, prefersReducedMotion } from "@/lib/motion";
+import { DESKTOP } from "@/lib/media";
 import { setSceneTarget } from "@/lib/scene-store";
 import { SERVICE_STEP_ROTATION } from "@/lib/scene-keyframes";
 import Container from "@/components/layout/Container";
@@ -32,7 +33,7 @@ export default function Services() {
 
       // Desktop: the pinned scroll advances the active row while the cube
       // rotates one quarter per service.
-      mm.add("(min-width: 768px)", () => {
+      mm.add(DESKTOP, () => {
         const total = steps.length;
         const trigger = ScrollTrigger.create({
           trigger: pin,
@@ -76,7 +77,7 @@ export default function Services() {
           <LineReveal
             as="h2"
             id="services-title"
-            className="mt-6 text-[clamp(2rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+            className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
             stagger={0.1}
             start="top 80%"
           >
@@ -89,7 +90,7 @@ export default function Services() {
 
       <div
         ref={pinRef}
-        className="relative mt-12 md:mt-0 md:flex md:items-center motion-safe:md:h-svh motion-safe:md:overflow-hidden"
+        className="relative mt-12 md:mt-0 md:flex md:items-center desktop:h-svh desktop:overflow-hidden"
       >
         <Container>
           <div className="grid-12">

@@ -14,7 +14,7 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
           <li key={`${title}-${link.label}`}>
             <a
               href={link.href}
-              className="link-wipe text-fg/85 transition-colors hover:text-accent"
+              className="link-wipe inline-flex min-h-11 items-center text-fg/85 transition-colors hover:text-accent"
             >
               {link.label}
             </a>
@@ -39,7 +39,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative z-10 border-t border-line pt-20 pb-10">
+    <footer className="relative z-10 border-t border-line pt-20 pb-[calc(env(safe-area-inset-bottom)+2.5rem)]">
       <Container>
         <div className="grid gap-12 md:grid-cols-[minmax(0,1fr)_auto_auto_auto]">
           <p className="max-w-xs text-pretty text-fg/85">
@@ -55,7 +55,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${site.email}`}
-                  className="link-wipe text-fg/85 transition-colors hover:text-accent"
+                  className="link-wipe inline-flex min-h-11 items-center text-fg/85 transition-colors hover:text-accent"
                 >
                   {site.email}
                 </a>
@@ -71,7 +71,7 @@ export default function Footer() {
                       href={social.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-fg/85 transition-colors hover:text-accent"
+                      className="inline-flex min-h-11 items-center text-fg/85 transition-colors hover:text-accent"
                     >
                       {social.label}
                     </a>
@@ -82,9 +82,9 @@ export default function Footer() {
           </nav>
         </div>
 
-        <p className="mt-20 text-[clamp(2.75rem,14vw,12rem)] leading-[0.8] font-medium tracking-[-0.05em]">
+        <p className="mt-20 text-[clamp(2.5rem,13vw,10rem)] leading-[0.8] font-medium tracking-[-0.05em]">
           {site.wordmark}
-          <span className="align-super text-[0.28em]">{site.mark}</span>
+          <span className="align-super text-[0.32em]">{site.mark}</span>
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">

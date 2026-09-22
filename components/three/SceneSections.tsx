@@ -99,14 +99,19 @@ export default function SceneSections() {
       }, 200);
     };
 
+    const onOrientation = () => ScrollTrigger.refresh();
+
     window.addEventListener("load", onLoad);
     window.addEventListener("resize", onResize);
+    window.addEventListener("orientationchange", onOrientation);
+    document.fonts.ready.then(() => ScrollTrigger.refresh()).catch(() => {});
 
     return () => {
       cancelAnimationFrame(raf);
       window.clearTimeout(resizeTimer);
       window.removeEventListener("load", onLoad);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onOrientation);
       triggers.forEach((trigger) => trigger.kill());
     };
   }, []);
