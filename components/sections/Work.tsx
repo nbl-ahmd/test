@@ -69,7 +69,7 @@ export default function Work() {
         <LineReveal
           as="h2"
           id="work-title"
-          className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+          className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em] text-balance max-sm:text-[clamp(1.9rem,8vw,2.4rem)]"
           stagger={0.12}
           yPercent={100}
           start="top 82%"

@@ -19,7 +19,7 @@ export default function Contact() {
           <LineReveal
             as="h2"
             id="contact-title"
-            className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.03] font-medium tracking-[-0.03em] text-balance"
+            className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.03] font-medium tracking-[-0.03em] text-balance max-sm:text-[clamp(1.9rem,8vw,2.4rem)]"
             stagger={0.08}
             yPercent={105}
           >

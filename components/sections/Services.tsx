@@ -81,7 +81,7 @@ export default function Services() {
           <LineReveal
             as="h2"
             id="services-title"
-            className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em]"
+            className="mt-6 text-[clamp(2.4rem,5vw,4rem)] leading-[1.05] font-medium tracking-[-0.03em] text-balance max-sm:text-[clamp(1.9rem,8vw,2.4rem)]"
             stagger={0.1}
             start="top 80%"
           >
@@ -98,7 +98,7 @@ export default function Services() {
       >
         <Container>
           <div className="grid-12">
-            <div className="col-span-12 lg:col-span-7">
+            <div className="col-span-12 lg:col-span-7 lg:pr-10">
           <ul className="w-full">
             {steps.map((step, index) => {
               const isActive = active === index;
