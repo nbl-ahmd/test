@@ -40,7 +40,9 @@ export default function Manifesto() {
       // to three giant lines that light up one after another.
       mm.add("(min-width: 768px)", () => {
         gsap.set(bodies, { maxHeight: 0, autoAlpha: 0 });
-        gsap.set(titles, { opacity: 0.15 });
+        // Inactive lines sit at 40% (>=3:1 for their large type) rather than
+        // 15%, so they remain legible while the active line holds focus.
+        gsap.set(titles, { opacity: 0.4 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -53,9 +55,11 @@ export default function Manifesto() {
           },
         });
 
+        // Unrevealed words stay at 45% (>=4:1 on the dark stage) rather than
+        // 15%, so the scrubbed statement is always legible to low-vision users.
         tl.fromTo(
           split.words,
-          { opacity: 0.15 },
+          { opacity: 0.45 },
           { opacity: 1, duration: 1, stagger: 0.3, ease: "none" },
           0,
         )
@@ -85,7 +89,7 @@ export default function Manifesto() {
           if (index < principles.length - 1) {
             tl.to(
               titles[index],
-              { opacity: 0.15, duration: DUR.base, ease: EASE.in },
+              { opacity: 0.4, duration: DUR.base, ease: EASE.in },
               "+=0.9",
             ).to(
               bodies[index],
@@ -105,7 +109,7 @@ export default function Manifesto() {
       mm.add("(max-width: 767px)", () => {
         const tween = gsap.fromTo(
           split.words,
-          { opacity: 0.15 },
+          { opacity: 0.45 },
           {
             opacity: 1,
             ease: "none",
@@ -142,15 +146,19 @@ export default function Manifesto() {
       <Container>
         <div className="relative">
           <div ref={statementWrapRef}>
-            <p className="label text-muted">{site.manifesto.label}</p>
-            <p className="sr-only">{site.manifesto.body}</p>
-            <p
-              ref={statementRef}
-              aria-hidden="true"
-              className="mt-8 max-w-[24ch] text-[clamp(1.8rem,4.5vw,4rem)] leading-[1.25] font-medium tracking-[-0.03em] text-balance"
-            >
-              {site.manifesto.body}
-            </p>
+            <div className="grid-12">
+              <div className="col-span-12 lg:col-span-7">
+                <p className="label text-muted">{site.manifesto.label}</p>
+                <p className="sr-only">{site.manifesto.body}</p>
+                <p
+                  ref={statementRef}
+                  aria-hidden="true"
+                  className="mt-8 max-w-[24ch] text-[clamp(1.8rem,4.5vw,4rem)] leading-[1.25] font-medium tracking-[-0.03em] text-balance"
+                >
+                  {site.manifesto.body}
+                </p>
+              </div>
+            </div>
           </div>
 
           <div

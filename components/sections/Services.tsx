@@ -92,6 +92,8 @@ export default function Services() {
         className="relative mt-12 md:mt-0 md:flex md:items-center motion-safe:md:h-svh motion-safe:md:overflow-hidden"
       >
         <Container>
+          <div className="grid-12">
+            <div className="col-span-12 lg:col-span-7">
           <ul className="w-full">
             {steps.map((step, index) => {
               const isActive = active === index;
@@ -114,7 +116,7 @@ export default function Services() {
                     <span className="label text-muted">({step.index})</span>
                     <span
                       className={`text-[clamp(2.1rem,6.5vw,5.5rem)] leading-[1] font-medium tracking-[-0.045em] transition-opacity duration-500 ${
-                        isActive ? "opacity-100" : "opacity-25"
+                        isActive ? "opacity-100" : "opacity-40"
                       }`}
                     >
                       {step.title}
@@ -147,6 +149,8 @@ export default function Services() {
               );
             })}
           </ul>
+            </div>
+          </div>
         </Container>
       </div>
     </section>

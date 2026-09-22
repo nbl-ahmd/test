@@ -18,12 +18,23 @@ export function startScroll(): void {
   instance?.start();
 }
 
+/** Space left above an anchor target: header height + 4rem. */
+export function anchorOffset(): number {
+  if (typeof document === "undefined") return 0;
+  const header = document.querySelector<HTMLElement>(".site-header");
+  return (header?.getBoundingClientRect().height ?? 0) + 64;
+}
+
 export function scrollToId(id: string): void {
   const target = document.getElementById(id);
   if (!target) return;
 
   if (instance) {
-    instance.scrollTo(target, { duration: 1.2, force: true });
+    instance.scrollTo(target, {
+      duration: 1.2,
+      force: true,
+      offset: -anchorOffset(),
+    });
     return;
   }
 

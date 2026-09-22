@@ -13,6 +13,8 @@ export default function Faq() {
       className="relative z-10 border-t border-line py-24 md:py-32"
     >
       <Container>
+        <div className="grid-12">
+          <div className="col-span-12 lg:col-span-7">
         <p className="label text-muted">{faq.label}</p>
         <LineReveal
           as="h2"
@@ -26,6 +28,8 @@ export default function Faq() {
 
         <div className="mt-12">
           <Accordion items={faq.items} />
+        </div>
+          </div>
         </div>
       </Container>
     </section>

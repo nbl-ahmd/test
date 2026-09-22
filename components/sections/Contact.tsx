@@ -12,8 +12,9 @@ export default function Contact() {
       aria-labelledby="contact-title"
       className="relative z-10 border-t border-line py-24 md:py-32"
     >
-      <Container className="grid gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-        <div>
+      <Container>
+        <div className="grid-12">
+          <div className="col-span-12 lg:col-span-7">
           <p className="label text-muted">{contact.label}</p>
           <LineReveal
             as="h2"
@@ -28,9 +29,8 @@ export default function Contact() {
           <div className="mt-10">
             <ContactForm />
           </div>
-        </div>
 
-        <aside className="lg:pt-24">
+        <aside className="mt-16 border-t border-line pt-10">
           <h3 className="label text-muted">{contact.nextLabel}</h3>
           <ol className="mt-5 space-y-5">
             {contact.nextSteps.map((step, index) => (
@@ -59,6 +59,8 @@ export default function Contact() {
             <p className="text-muted">{contact.nda}</p>
           </div>
         </aside>
+          </div>
+        </div>
       </Container>
     </section>
   );

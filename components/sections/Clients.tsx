@@ -17,17 +17,17 @@ export default function Clients() {
       const statement = statementRef.current;
       if (!statement) return;
 
+      const words = gsap.utils.toArray<HTMLElement>("[data-accent]", statement);
       if (prefersReducedMotion()) {
-        gsap.set("[data-underline]", { scaleX: 1 });
+        gsap.set(words, { backgroundSize: "100% 2px" });
         return;
       }
 
       const tween = gsap.fromTo(
-        "[data-underline]",
-        { scaleX: 0 },
+        words,
+        { backgroundSize: "0% 2px" },
         {
-          scaleX: 1,
-          transformOrigin: "left center",
+          backgroundSize: "100% 2px",
           ease: "none",
           stagger: 0.45,
           scrollTrigger: {
@@ -55,6 +55,8 @@ export default function Clients() {
       className="relative z-10 flex min-h-svh items-center border-t border-line py-32 md:py-40"
     >
       <Container>
+        <div className="grid-12">
+          <div className="col-span-12 lg:col-span-7">
         <p className="label text-muted">{clients.label}</p>
         <p id="clients-title" className="sr-only">
           Who we work with
@@ -65,19 +67,16 @@ export default function Clients() {
         >
           {clients.statement.map((part, index) =>
             part.accent ? (
-              <span key={index} className="relative inline-block whitespace-nowrap">
+              <span key={index} data-accent className="accent-word">
                 {part.text}
-                <span
-                  data-underline
-                  aria-hidden="true"
-                  className="absolute inset-x-0 -bottom-[0.04em] h-[0.055em] origin-left scale-x-0 rounded-full bg-accent"
-                />
               </span>
             ) : (
               <span key={index}>{part.text}</span>
             ),
           )}
         </p>
+          </div>
+        </div>
       </Container>
     </section>
   );

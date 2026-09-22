@@ -27,7 +27,7 @@
        resolves to this gutter so the page shares a single vertical rail. */
     --gutter: clamp(20px, 4vw, 64px);
     /* Approximate rendered header height (wordmark + vertical padding). */
-    --header-h: 4.5rem;
+    --header-h: 5rem;
     /* Motion tokens — mirrors lib/motion-tokens.ts. */
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-inout: cubic-bezier(0.87, 0, 0.13, 1);
@@ -112,6 +112,20 @@
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  /* Bracketed words in the "who we work with" statement. The underline is a
+     background gradient so it draws per wrapped line and can be scrubbed. */
+  .accent-word {
+    background-image: linear-gradient(
+      var(--color-accent),
+      var(--color-accent)
+    );
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 2px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   /* Outlined display numerals for the horizontal process panels. */

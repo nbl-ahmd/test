@@ -17,9 +17,11 @@ export const SECTION_KEYFRAMES: Record<string, SectionKeyframe> = {
   process: { shape: 3, dim: 0.3, stage: "hero", x: 0, camZ: 6.5, rotY: 0, turbulence: 0 },
   work: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 0.4, turbulence: 0 },
   why: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 0.7, turbulence: 0 },
-  commitments: { shape: 1, dim: 0.2, stage: "right", x: 0, camZ: 7.4, rotY: 1, turbulence: 0 },
-  founder: { shape: 1, dim: 0.18, stage: "right", x: 0, camZ: 7.4, rotY: 1.15, turbulence: 0 },
-  stack: { shape: 1, dim: 0.15, stage: "right", x: 0, camZ: 7.4, rotY: 1.3, turbulence: 0 },
+  // Commitments (staggered counters) and Stack (full-bleed marquee) deliberately
+  // keep the scene hidden so nothing sits behind their wide text.
+  commitments: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 1, turbulence: 0 },
+  founder: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 1.15, turbulence: 0 },
+  stack: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 1.3, turbulence: 0 },
   testimonials: { shape: 1, dim: 0, stage: "hidden", x: 0, camZ: 7.4, rotY: 1.6, turbulence: 0 },
   faq: { shape: 1, dim: 0.18, stage: "right", x: 0, camZ: 7.4, rotY: 1.9, turbulence: 0 },
   contact: { shape: 4, dim: 0.7, stage: "right", x: 0, camZ: 5.2, rotY: 0, turbulence: 0 },
